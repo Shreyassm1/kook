@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+body{
+    margin: 0;
+    font-family: "Nunito",sans-serif;
+    box-sizing: border-box;
+}
+.max-width{
+    width: 1100px;
+    margin: 0px auto;
+}
+.absolute-centre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+    font-size: 30px;
+    color: #1c1c1c;
+    font-weight: 600;
+    margin: 32px 0px;
+}
+.item-collections{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.item-cards{
+    display: flex;
+    height: 120px;
+    width: 800px;
+    margin-bottom: 36px;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: rgb(28 28 28 / 8%) 0px 8px 8px;
+}
+.name-img-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 130px;
+    height: 125px;
+    margin-bottom: 5px ;
+}
+.item-image{
+    border-radius: 16px;
+    width: 120px;
+    height: 100px;
+}
+.item-name{
+    font-weight: 600;
+    text-shadow: 0.5px 0.5px 0.5px #5a5a5a;
+    margin: 0px 0px 4px;
+    color: black;
+    font-size: 17px;
+}
+.item-description{
+    font-weight: 600;
+    color: black;
+    font-size: 18px;
+}
+.item-price{
+    font-size: 16px;
+    color: #5a5a5a;
+    font-weight: 400;
+}
+.add-btn{
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+    border: #5a5a5a solid 2px;
+    height: 15px;
+    width: 40px;
+    padding: 5px 5px 5px 5px;
+    border-radius: 8px;
+}
+.add-btn p{
+    color: #5a5a5a;
+    font-weight: 900;
+    font-size: 12px;
+}
+.add-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(150, 150, 150, 0.5);
+    cursor: pointer;
+}
+.add-btn-text{
+    display: flex;
+    align-items: center;
+    color: #5a5a5a;
+    font-weight: 900;
+    font-size: 12px;
+}
+.add-btn-box{
+    display: flex;
+    
+}
+.add-sub{
+    margin: 0px 5px 0px 5px;
+}

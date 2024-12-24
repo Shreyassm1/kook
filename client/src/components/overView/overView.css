@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+body{
+    margin: 0;
+    font-family: "Nunito",sans-serif;
+    box-sizing: border-box;
+}
+.max-width{
+    width: 1100px;
+    margin: 0px auto;
+}
+.absolute-centre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+    font-size: 30px;
+    color: #1c1c1c;
+    font-weight: 600;
+    margin: 32px 0px;
+}
+.canteen-collections{
+    display: flex;
+    flex-wrap: wrap;
+}
+.canteen-cards{
+    display: flex;
+    flex-direction: column;
+    max-width: 18rem;
+    max-height: 26rem;
+    margin-right: 32px;
+    margin-bottom: 36px;
+    border-radius: 16px;
+    padding: 10px;
+}
+.canteen-image{
+    border-radius: 16px;
+    max-width: 24rem;
+    height: 15rem;
+}
+.canteen-name{
+    font-weight: 600;
+    margin: 8px 0px 4px;
+    color: black;
+    font-size: 17px;
+}
+.canteen-description{
+    font-weight: 400;
+    color: #696969;
+    font-size: 14px;
+
+}
+.canteen-location{
+    font-weight: 400;
+    color: #9c9c9c;
+    font-size: 14px;
+}
+.canteen-cards:hover{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(150, 150, 150, 0.5);
+    cursor: pointer;
+}

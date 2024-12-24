@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Angkor&display=swap');
+
+/* * {
+  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.primary-button {
+  background-color: #002962;
+  border-color: #005555;
+  height: 50px;
+  width: 100%;
+  color: white;
+  font-family: "Angkor", serif;
+  font-size: 16px;
+}
+.primary-button:hover{
+    cursor: pointer;
+}
+.input-box-title{
+    font-size: 20px;
+}
+.anchor:hover {
+  text-decoration: underline;
+}
+
+.authentication {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Angkor", serif;
+  align-items: center;
+  justify-content: center;
+  background-image: url(./register-bg.jpg);
+  background-size: cover;
+}
+
+.authentication-form {
+  width: 400px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0); 
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.input-box-uep input {
+    width: 100%;
+    height: 40px; 
+    margin-bottom: 20px;
+    font-family: "Angkor", serif;
+    padding: 10px;
+  }
+
+.google-btn {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+.google-btn button{
+    font-family: "Angkor", serif;
+    padding: 5px;
+}
+.google-btn button:hover{
+    cursor: pointer;
+}
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: #ff002b;
+    color: white;
+    padding: 7px 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}

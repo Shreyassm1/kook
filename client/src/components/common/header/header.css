@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+body{
+    margin: 0;
+    font-family: "Nunito",sans-serif;
+    box-sizing: border-box;
+}
+.max-width{
+    width: 1100px;
+    margin: 0px auto;
+}
+.absolute-centre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.header-logo{
+    height: 65px;
+    max-width: 180px;
+    margin-right: 24px;
+}
+.header-right{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+}
+.header-location-search-box{
+    height: 54px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid rgb(232,232,232);
+    box-shadow: rgb(28 28 28 / 8%) 0px 2px 8px;
+    width: 70%;
+    background-color: rgb(255,255,255);
+}
+.location-box{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+.location-icon-name{
+    color: #828282;
+}
+.location-icon{
+    color: #ff7e8b;
+    font-size: 20px;
+    margin-right: 8px;
+}
+.separater{
+    height: 20px;
+    border: 0.5px solid #828282;
+}
+.header-search-box{
+    display: flex;
+    flex: 2;
+}
+.search-icon{
+    color: #828282;
+    font-size: 20px;
+    margin: 0px 12px;
+}
+.search-input-box{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 60%;
+}
+.profile-box{
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
+    align-items: center;
+}
+.profile-img{
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.profile-name{
+    font-size: 16px;
+    font-weight: 600;
+}
+.fa-solid fa-angle-down{
+    font-size: 20px;
+}
+.cart-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cart-icon{
+    font-size: 25px;
+}
+.cart-text{
+    font-size: 20px;
+    margin-left: 5px;
+    font-weight: 600;
+}
+.cart-box:hover{
+    color: #595858;
+    cursor: pointer;
+}

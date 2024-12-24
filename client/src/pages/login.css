@@ -1,0 +1,76 @@
+.lmain {
+  display: flex;
+  background: url(register-bg.png);
+  background-size: cover;
+  height: 100vh; /* Set height to fill the viewport */
+}
+
+.lregister-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  margin-left: auto;
+  border-radius: 8px;
+  max-width: 300px; /* Limit width for larger screens */
+  width: 90%; /* Use percentage for fluid width */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.lregister-box h2 {
+  text-align: center;
+}
+
+.lform-container {
+  margin-top: 20px;
+}
+
+.linput-uep {
+  margin-bottom: 15px;
+}
+input{
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.lregister-btn button,
+.google-btn button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.lregister-btn button:hover,
+.google-btn button:hover {
+  background-color: #0056b3;
+}
+
+.login-btn {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.login-btn a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.login-btn a:hover {
+  color: #0056b3;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+  .lregister-box {
+      max-width: 90%; /* Adjust max-width for smaller screens */
+  }
+}
