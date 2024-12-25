@@ -33,6 +33,7 @@ export const loginUser = async (loginData) => {
 
 
 export const registerOwner = async (registrationData) => {
+  console.log('authCon.js touched')
   try {
     const response = await axios.post(`${BASE_URL}/registerOwner`, registrationData);
     

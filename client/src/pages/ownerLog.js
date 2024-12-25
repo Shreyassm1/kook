@@ -32,7 +32,7 @@ const OwnerLogin = () => {
       console.log("JWT Token:", token);
       localStorage.setItem('token', token);
 
-      window.location.href = "http://localhost:3000/ownerM";
+      window.location.href = "http://localhost:3000/ownerU";
     } catch (error) {
       console.error("Error logging in:", error);
     }

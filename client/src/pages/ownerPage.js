@@ -62,6 +62,7 @@ const OwnerPage = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(requestData)
+                
             });
 
             if (!response.ok) {
@@ -69,7 +70,7 @@ const OwnerPage = () => {
             }
 
             console.log('Canteen data submitted successfully');
-
+            window.location.href = "http://localhost:3000/ownerM";
             setCanteenName("");
             setCanteenDescription("");
             setCanteenLocation("");
@@ -120,7 +121,8 @@ const OwnerPage = () => {
                 </div>
                 <button type="submit">Submit</button>
             </form>
-            <a href='/ownerM'>Upload Menu</a>
+            {/* <a href='/ownerM'>Upload Menu</a> */}
+            
         </div>
     );
 };

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 body{
     margin: 0;
     font-family: "Nunito",sans-serif;
@@ -97,4 +97,156 @@ body{
 }
 .add-sub{
     margin: 0px 5px 0px 5px;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+body {
+    margin: 0;
+    font-family: "Nunito", sans-serif;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.max-width {
+    width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.absolute-centre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #1c1c1c;
+    font-weight: 700;
+    text-align: center;
+    margin: 32px 0;
+}
+
+.item-collections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 10px;
+}
+
+.item-cards {
+    display: flex;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-cards:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.name-img-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.item-image {
+    border-radius: 12px;
+    width: 120px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.item-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.item-description {
+    font-weight: 500;
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+.item-price {
+    font-size: 1.1rem;
+    color: #5a5a5a;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    border: none;
+    background: linear-gradient(135deg, #ff7a18, #ffb74d);
+    color: white;
+    font-weight: bold;
+    height: 40px;
+    width: 80px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-btn p {
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.add-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(255, 122, 24, 0.4);
+}
+
+.add-btn-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-sub {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff7a18;
+    background: #fff;
+    border: 2px solid #ff7a18;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-sub:hover {
+    background: #ff7a18;
+    color: white;
 }

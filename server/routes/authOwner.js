@@ -15,15 +15,16 @@ router.post('/registerOwner', async (req, res) => {
 
         // Checks if username, email and password are provided and if they are unique
         if (!username || !email || !password) {
+            console.log('check1')
             return res.status(400).json({ error: 'Username, email, and password are required' });
         }
         const existingOwner = await Owner.findOne({ email });
-        
+        console.log('check2')
         //old - reroute to login
         if (existingOwner) {
             return res.status(409).json({ error: 'Email is already registered' });//409-conflict
         }
-
+        console.log('creating owner')
         //new - hash the password and store in db
         const hashedPassword = await bcrypt.hash(password, 10);
         const newOwner = new Owner({

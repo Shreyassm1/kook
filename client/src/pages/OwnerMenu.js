@@ -120,6 +120,9 @@ const OwnerPage = () => {
                 </div>
                 <button type="submit">Submit</button>
             </form>
+
+            <a href='/ownerM'>Login to another Canteen</a>
+            
         </div>
     );
 };

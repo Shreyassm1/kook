@@ -4,7 +4,7 @@ import { registerOwner } from '../controllers/authCon';
 import './register.css';
 function Register() {
 
-  const [userName, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,7 +12,7 @@ function Register() {
     e.preventDefault();
 
     const registrationData = {
-      userName,
+      username,
       email,
       password
     };
@@ -20,9 +20,9 @@ function Register() {
     try {
       const response = await registerOwner(registrationData);
       if (response.success === false) {
-        window.location.href = "/"; // Redirect to register page if registration fails
+        window.location.href = "/ownerR"; // Redirect to register page if registration fails
       } else {
-        window.location.href = "/ownerU"; // Redirect to home page if registration is successful
+        window.location.href = "/ownerL"; // Redirect to home page if registration is successful
       }
     } catch (error) {
       console.error("Registration failed:", error);
@@ -38,7 +38,7 @@ function Register() {
             Name
           </div>
           <div className='input-box-uep'>
-            <input type='text' value={userName} onChange={(e)=>setUsername(e.target.value)} placeholder='Name'/>
+            <input type='text' value={username} onChange={(e)=>setUsername(e.target.value)} placeholder='Name'/>
           </div>
           <div className='input-box-title'>
             E-mail
