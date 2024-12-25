@@ -69,7 +69,7 @@ function Register() {
             <Link to='/' className='anchor'>Don't have an account? </Link>
           </div>
           <div className='links'>
-          <Link to='/ownerR' className='anchor'>Click Here if You are a Partner!</Link>
+          <Link to='/ownerR' className='anchor'>Click here if you are an owner.</Link>
           </div>
         </form>
       </div>

@@ -1,10 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import './ownerPage.css';
 
 const OwnerPage = () => {
-    const [ItemName, setItemName] = useState("");
-    const [ItemPrice, setItemPrice] = useState("");
-    const [ItemImage, setItemImage] = useState("");
-    const [ItemDescription, setItemDescription] = useState("");
+    const [canteenName, setCanteenName] = useState("");
+    const [canteenDescription, setCanteenDescription] = useState("");
+    const [canteenLocation, setCanteenLocation] = useState("");
+    const [canteenImage, setCanteenImage] = useState("");
     const [token, setToken] = useState("");
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const OwnerPage = () => {
             
             if (response.ok) {
                 const data = await response.json();
-                setItemImage(data.secure_url); 
+                setCanteenImage(data.secure_url); 
                 console.log('Image uploaded successfully:', data);
             } else {
                 console.error('Failed to upload image');
@@ -50,13 +51,13 @@ const OwnerPage = () => {
 
         try {
             const requestData = {
-                ItemName,
-                ItemPrice,
-                ItemDescription,
-                ItemImage,
+                canteenName,
+                canteenDescription,
+                canteenLocation,
+                canteenImage
             };
 
-            const response = await fetch('http://localhost:8000/menuUpload', {
+            const response = await fetch('http://localhost:8000/ownerPost', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,10 +71,11 @@ const OwnerPage = () => {
             }
 
             console.log('Canteen data submitted successfully');
-            setItemName("");
-            setItemImage("");
-            setItemDescription("");
-            setItemPrice("");
+            window.location.href = "http://localhost:3000/ownerM";
+            setCanteenName("");
+            setCanteenDescription("");
+            setCanteenLocation("");
+            setCanteenImage("");
 
         } catch (error) {
             console.error('Error:', error);
@@ -81,36 +83,36 @@ const OwnerPage = () => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div className="item-name">
+        <div className="ownerPage__container">
+            <form className="ownerPage__form" onSubmit={handleSubmit}>
+                <div className="ownerPage__form__input">
                     <input 
                         type="text" 
-                        placeholder="Enter Item Name"
-                        value={ItemName}
-                        onChange={(event) => setItemName(event.target.value)}
+                        placeholder="Enter Canteen Name"
+                        value={canteenName}
+                        onChange={(event) => setCanteenName(event.target.value)}
                         required
                     />
                 </div>
-                <div className="item-price">
+                <div className="ownerPage__form__input">
                     <input 
                         type="text" 
-                        placeholder="Enter Item Price"
-                        value={ItemPrice}
-                        onChange={(event) => setItemPrice(event.target.value)}
+                        placeholder="Enter Canteen Description"
+                        value={canteenDescription}
+                        onChange={(event) => setCanteenDescription(event.target.value)}
                         required
                     />
                 </div>
-                <div className="item-quantity">
+                <div className="ownerPage__form__input">
                     <input 
                         type="text" 
-                        placeholder="Enter Item Description"
-                        value={ItemDescription}
-                        onChange={(event) => setItemDescription(event.target.value)}
+                        placeholder="Enter Canteen Location"
+                        value={canteenLocation}
+                        onChange={(event) => setCanteenLocation(event.target.value)}
                         required
                     />
                 </div>
-                <div className="item-image">
+                <div className="ownerPage__form__input">
                     <input 
                         type="file" 
                         onChange={handleImageUpload}
@@ -120,9 +122,6 @@ const OwnerPage = () => {
                 </div>
                 <button type="submit">Submit</button>
             </form>
-
-            <a href='/ownerM'>Login to another Canteen</a>
-            
         </div>
     );
 };

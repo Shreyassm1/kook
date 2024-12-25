@@ -143,7 +143,7 @@ function Register() {
             </button>
           </div>
           <div className='links'>
-            <Link to='/login' className='anchor'>Already have an account!! </Link>
+            <Link to='/login' className='anchor'>Already have an account?</Link>
           </div>
           <div className='links'>
           <Link to='/ownerR' className='anchor'>Click here if you are an owner.</Link>

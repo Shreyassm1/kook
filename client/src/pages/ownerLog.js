@@ -22,17 +22,24 @@ const OwnerLogin = () => {
         },
         body: JSON.stringify(userData)
       });
-
+      console.log(response)
       if (!response.ok) {
         throw new Error('Failed to login');
       }
 
       const data = await response.json();
       const token = data.token;
+      const hasCanteen = data.hasCanteen;  // Get the hasCanteen field from response
       console.log("JWT Token:", token);
       localStorage.setItem('token', token);
 
-      window.location.href = "http://localhost:3000/ownerU";
+      // Redirect based on the hasCanteen value
+      if (hasCanteen) {
+        window.location.href = "http://localhost:3000/ownerM";  
+      } else {
+        window.location.href = "http://localhost:3000/ownerU"; 
+      }
+
     } catch (error) {
       console.error("Error logging in:", error);
     }
@@ -41,30 +48,29 @@ const OwnerLogin = () => {
   return (
     <div className='authentication'>
       <div className='authentication-form'>
-        <div className='form-title'>Nice To Meet You</div>
+        <div className='form-title'>Welcome Back</div>
         <form layout='vertical'>
           <div className='input-box-title'>
             E-mail
           </div>
           <div className='input-box-uep'>
-            <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='xyz@email.com'/>
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='xyz@email.com' />
           </div>
           <div className='input-box-title'>
             Password
           </div>
           <div className='input-box-uep'>
-            <input type='password' value={password} onChange={(e)=>setPassword(e.target.value)} placeholder='password'/>
+            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password' />
           </div>
-          <button className='primary-button' type='submit' onClick={handleSubmit}>REGISTER</button>
+          <button className='primary-button' type='submit' onClick={handleSubmit}>Login</button>
           <div className='links'>
-            <Link to='/ownerL' className='anchor'>Already have an account?</Link>
+            <Link to='/ownerR' className='anchor'>Don't have an account?</Link>
           </div>
           <div className='links'>
-          <Link to='/' className='anchor'>Click here if you are a student.</Link>
+            <Link to='/' className='anchor'>Click here if you are a student.</Link>
           </div>
         </form>
       </div>
-
     </div>
   );
 };

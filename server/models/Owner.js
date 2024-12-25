@@ -13,7 +13,10 @@ const ownerSchema = mongoose.Schema({
         type: String,
         required: false
     },
-
+    hasCanteen: {
+        type: Boolean,
+        default: false // Default to false, meaning no canteen
+    }
 });
 
 const Owner = mongoose.model("Owner", ownerSchema);
