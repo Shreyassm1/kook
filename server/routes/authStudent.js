@@ -180,6 +180,44 @@ router.post("/logout",verifyJWT, async(req,res) => {
 
 });
 
+router.post('/refresh-token',verifyJWT,async(req,res) => {
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+
+    if (incomingRefreshToken) {
+        res.status(401,"unauthorized access")
+    }
+    try{
+        const decodedToken = jwt.verify(
+            incomingRefreshToken,
+            process.env.JWT_SECRET
+        )
+
+        const user = await User.findById(decodedToken?._id)
+
+        if (incomingRefreshToken !== user?.refreshToken) {
+            throw new ApiError(401, "Refresh token is expired or used")
+            
+        }
+    
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+    
+        const {accessToken, newRefreshToken} = await generateAccessAndRefereshTokens(user._id)
+    
+        return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", newRefreshToken, options)
+        .json({message:"Access token refreshed"})
+
+    }
+    catch(error){
+        res.status(401).json({error: "Invalid refresh token"})
+    }
+})
+
 // OAuth2 authentication route
 router.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
