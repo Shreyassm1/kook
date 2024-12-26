@@ -1,18 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import React, { useState } from 'react';
 import { loginUser } from '../controllers/authCon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import './register.css';
+
 function Register() {
-
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate(); // Initialize the navigate function
+
   const googleAuth = async (e) => {
     e.preventDefault();
-
     // Redirect user to OAuth2 authentication route on backend
     window.location.href = "http://localhost:8000/auth/google";
   }
@@ -28,15 +28,14 @@ function Register() {
     try {
       const response = await loginUser(registrationData);
       if (response.success === false) {
-        window.location.href = "/"; // Redirect to home page if registration fails
+        navigate("/"); // Use navigate for routing to home page
       } else {
-        window.location.href = "/home"; // Redirect to home page if registration is successful
+        navigate("/home"); // Navigate to home if login is successful
       }
     } catch (error) {
       console.error("Registration failed:", error);
     }
   };
-
 
   const onFinish = (values) => {
     console.log("Received values of form:", values);
@@ -51,13 +50,13 @@ function Register() {
             E-mail
           </div>
           <div className='input-box-uep'>
-            <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='xyz@email.com'/>
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='xyz@email.com' />
           </div>
           <div className='input-box-title'>
             Password
           </div>
           <div className='input-box-uep'>
-            <input type='password' value={password} onChange={(e)=>setPassword(e.target.value)} placeholder='password'/>
+            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password' />
           </div>
           <button className='primary-button' type='submit' onClick={handleSubmit}>Login</button>
           <div className='google-btn'>
@@ -69,11 +68,10 @@ function Register() {
             <Link to='/' className='anchor'>Don't have an account? </Link>
           </div>
           <div className='links'>
-          <Link to='/ownerR' className='anchor'>Click here if you are an owner.</Link>
+            <Link to='/ownerR' className='anchor'>Click here if you are an owner.</Link>
           </div>
         </form>
       </div>
-
     </div>
   );
 }

@@ -17,6 +17,9 @@ const userSchema = mongoose.Schema({
     profilePicture : {
         type : String,
         required: false,
+    },
+    refreshToken: {
+        type: String
     }
     
 });

@@ -4,13 +4,18 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const session = require("express-session");
-const cors = require("cors");
 const app = express();
 const auth = require('./routes/authStudent');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+const cors = require('cors');
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 app.use(session({ secret: 'fstiwrhsb', resave: false, saveUninitialized: false }));
 app.use('/register', auth);
 app.use('/ownerPost',auth);
@@ -27,4 +32,5 @@ mongoose
   
 const port = process.env.PORT || 8000;
 const server = app.listen(port,()=> console.log(`server is running ${port}`));
+
 

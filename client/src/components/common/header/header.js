@@ -2,11 +2,26 @@
 import "./header.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import logo from './logo.png'
+import {logoutUser} from "../../../controllers/authCon";
+
 const Header = ()=> {
 
     const handleCart = () => {
         window.location.href = "/cart"
     }
+    const handleLogout = async (e) => {
+        console.log("logout clicked")
+        e.stopPropagation(); 
+        const response = await logoutUser();
+        if (!response.success) {
+          console.error("Logout failed:", response.error);
+          alert("Logout failed. Please try again later.");
+        } else {
+          window.location.href = "/login";
+        }
+      };
+      
+      
 
     return (
         <div className="max-width">
@@ -49,8 +64,11 @@ const Header = ()=> {
                             <i class="fa-solid fa-cart-shopping"></i>
                         </div>
                         <div className="cart-text">
-                            Cart
+                            {/* Cart */}
                         </div>
+                    </div>
+                    <div className="logout-btn" onClick={handleLogout}>
+                        <i class='fa-solid fa-sign-out'></i>
                     </div>
                 </div>
             </div>

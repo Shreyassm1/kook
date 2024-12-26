@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
 const BASE_URL = 'http://localhost:8000';
 
 export const registerUser = async (registrationData) => {
@@ -50,3 +51,20 @@ export const registerOwner = async (registrationData) => {
     }
   }
 };
+
+
+export const logoutUser = async () => {
+  console.log("logout user touched.")
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/logout`,
+      {}, 
+    );
+    console.log("Logout response:", response);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Logout error:", error);
+    return { success: false, error: "Logout failed" };
+  }
+};
+

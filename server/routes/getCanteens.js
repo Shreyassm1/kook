@@ -3,7 +3,7 @@ const Canteen = require("../models/canteens");
 const router = express.Router();
 //fetch canteen data from backend and upload it to frontend.
 router.get("/getCanteens",async (req, res) => {
-    console.log("getCanteens route accessed.");
+
     try {
         const canteens = await Canteen.find();
         if (!canteens || canteens.length === 0) {
@@ -22,7 +22,7 @@ router.get("/getCanteens",async (req, res) => {
                 canteenId: canteen.canteenId
             };
         });
-
+        
         res.json(canteensData);
 
     } catch (error) {

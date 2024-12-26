@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const passport = require('passport');
-const goth = require('../models/goth')
+const goth = require('../models/goth');
+const { generateRefreshToken, generateAccessToken } = require('../utils/generateToken');
+const verifyJWT = require('../middleware/isAuth');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
-
 
 //passport set up for google authentication 
 passport.use(new GoogleStrategy({
@@ -55,48 +56,62 @@ passport.deserializeUser((id, done) => {
     });
 });
 
+//access and refresh token
+const generateAccessAndRefreshTokens = async (userId) => {
+    try {
+        const user = await User.findById(userId);
+        const refreshToken = generateRefreshToken(userId);
+        const accessToken = generateAccessToken(userId);
+
+        user.refreshToken = refreshToken;
+        await user.save({ validateBeforeSave: false });
+
+        return { refreshToken, accessToken };
+    } catch (error) {
+        throw new Error('Something went wrong while generating access and refresh tokens.');
+    }
+};
+
+
 // Signup route - local authentication
 router.post('/register', async (req, res) => {
-
+    console.log(req.body)
     try {
-        //extract the request recieved from frontend into following variables.
         const { userName, email, password } = req.body;
 
-        // Checks if username, email and password are provided and if they are unique
         if (!userName || !email || !password) {
             return res.status(400).json({ error: 'Username, email, and password are required' });
         }
 
+        // Check if a user with this email already exists
         const existingUser = await User.findOne({ email });
-        
-        //old - reroute to login
         if (existingUser) {
-            return res.status(409).json({ error: 'Email is already registered' });//409-conflict
+            return res.status(409).json({ error: 'Email is already registered' });
         }
 
-        //new - hash the password and store in db
+        // Check if a user with this username already exists
+        const existingUsername = await User.findOne({ userName });
+        if (existingUsername) {
+            return res.status(409).json({ error: 'Username is already taken' });
+        }
+
+        // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(password, 10);
+
         const newUser = new User({
             userName,
             email,
             password: hashedPassword
         });
+
         await newUser.save();
-
-        // generate token and send through response
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '5d' });
-        localStorage.setItem('token', token);
-        return res.status(201).json({ token });
-
-    } 
-
-    catch (error) {
-        //any other error based on logic or internal error.
+        return res.status(201).json({ message: "Registration successful" });
+    } catch (error) {
         console.error('Error in signup route:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
-
 });
+
 
 // Login route for local authentication
 router.post('/login', async (req, res) => {
@@ -108,7 +123,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email });//$or: [{username},{password}]
 
         if (!user) {
             return res.status(401).json({ error: 'Invalid email or password' });//401-unauth
@@ -118,18 +133,50 @@ router.post('/login', async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid password' });
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '5d' });
-        console.log(token);
-        return res.status(200).json({ token });
+        const{accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id);
+
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+        return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({message: "User logged in successfully"})
 
     } 
     catch (error) {
         console.error('Error in login route:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
+
+});
+
+router.post("/logout",verifyJWT, async(req,res) => {  
+
+        User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $set: { refreshToken: null }
+            },
+            {
+                new: true
+            }
+        )
+
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+        return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json({message: "User logged out successfully"})
 
 });
 

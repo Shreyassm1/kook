@@ -101,13 +101,13 @@ function Register() {
       email,
       password
     };
-
+    
     try {
       const response = await registerUser(registrationData);
       if (response.success === false) {
-        window.location.href = "/"; // Redirect to home page if registration fails
+        window.location.href = "/"; // Redirect to reg page if registration fails
       } else {
-        window.location.href = "/home"; // Redirect to home page if registration is successful
+        window.location.href = "/login"; // Redirect to home page if registration is successful
       }
     } catch (error) {
       console.error("Registration failed:", error);
