@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from "react";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import useFetchData from "../../utils/useFetchData";
 import "./overView.css";
 
 const OverView = () => {
   const [canteens, setCanteens] = useState([]);
 
-  useEffect(() => {
-    console.log("useEffect triggered: fetching canteens...");
-    fetchCanteens();
-  }, []);
+  const { data, isLoading, isError } = useFetchData(
+    "http://localhost:8000/getCanteens"
+  );
 
-  const fetchCanteens = async () => {
-    try {
-      console.log("Fetching canteens from server...");
-      const response = await fetch("http://localhost:8000/getCanteens");
-      if (!response.ok) {
-        throw new Error("Failed to fetch canteens");
-      }
-      console.log("Canteens fetched successfully.");
-      const data = await response.json();
-      console.log("Canteens data:", data);
+  useEffect(() => {
+    if (data && data.length > 0) {
       setCanteens(data);
-    } catch (error) {
-      console.error("Error fetching canteens:", error);
     }
-  };
+  }, [data]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error fetching data: {isError}</div>;
+  }
 
   const handleClick = (canteenId) => {
     console.log("Canteen ID clicked:", canteenId);

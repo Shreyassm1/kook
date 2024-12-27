@@ -1,48 +1,45 @@
 import React, { useState, useEffect } from "react";
 import "./menu.css";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-
+import useFetchData from "../../utils/useFetchData";
 const Menu = () => {
   const [items, setItems] = useState([]);
-  const [canteenName, setCanteenName] = useState("");
   const { canteenId } = useParams();
 
+  // Fetch menu items
+  const {
+    data: menuData,
+    isLoading: isMenuLoading,
+    isError: isMenuError,
+  } = useFetchData(`http://localhost:8000/getMenu/${canteenId}`);
+
+  // Fetch canteen name
+  const {
+    data: canteenData,
+    isLoading: isCanteenLoading,
+    isError: isCanteenError,
+  } = useFetchData(`http://localhost:8000/getCanteenName/${canteenId}`);
+
+  // Initialize items with itemCount
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        // console.log("Fetching items from server...");
-        const response = await axios.get(
-          `http://localhost:8000/getMenu/${canteenId}`
-        );
+    if (menuData && menuData.length > 0) {
+      const updatedItems = menuData.map((item) => ({
+        ...item,
+        itemCount: 0,
+      }));
+      setItems(updatedItems);
+    }
+  }, [menuData]);
 
-        const itemsWithCount = response.data.map((item) => ({
-          ...item,
-          itemCount: 0,
-        }));
-        setItems(itemsWithCount);
-      } catch (error) {
-        console.error("Error fetching items:", error);
-      }
-    };
+  // Handle loading and error states
+  if (isMenuLoading || isCanteenLoading) {
+    return <div>Loading...</div>;
+  }
 
-    const fetchCanteenName = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/getCanteenName/${canteenId}`
-        );
-        console.log(response.data);
-        const canteenName = response.data;
-        setCanteenName(canteenName);
-      } catch (error) {
-        console.error("Error fetching canteen:", error);
-      }
-    };
+  if (isMenuError || isCanteenError) {
+    return <div>Error fetching data.</div>;
+  }
 
-    fetchCanteenName();
-    fetchItems();
-  }, [canteenId]);
-  // console.log(items);
   const handleAdd = (itemId) => {
     const updatedItems = items.map((item) => {
       if (item._id === itemId) {
@@ -65,7 +62,7 @@ const Menu = () => {
 
   return (
     <div className="max-width">
-      <div className="title">{canteenName} - MENU</div>
+      <div className="title">{canteenData} - Menu</div>
       <div className="item-collections">
         {items.map((item) => (
           <div className="item-cards" key={item._id}>
@@ -106,5 +103,4 @@ const Menu = () => {
     </div>
   );
 };
-
 export default Menu;
