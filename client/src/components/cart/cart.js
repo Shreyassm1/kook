@@ -1,15 +1,14 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./cart.css";
+import { uploadOrder } from "../../controllers/uploadCon";
+import { clearCart } from "../../redux/actions/cartActions";
 
 const Cart = () => {
-  // Access the cartItems state from Redux store
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
-  // Log the cartItems for debugging
-  console.log("Cart items from Redux:", cartItems);
-
-  // If the cart is empty, show a message
   if (!cartItems || Object.keys(cartItems).length === 0) {
     return (
       <div className="empty-cart-message">
@@ -22,7 +21,26 @@ const Cart = () => {
     return total + cartItems[itemId].ItemPrice * cartItems[itemId].itemCount;
   }, 0);
 
-  // Display the cart items
+  const handlePay = () => {
+    setPopupVisible(true);
+    const orderInfo = {
+      cartItems,
+      amount: totalAmount,
+    };
+    console.log(orderInfo);
+    const response = uploadOrder(orderInfo);
+    if (response.success !== false) {
+      console.log("Order Failed");
+    } else {
+      console.log(orderInfo);
+    }
+  };
+
+  const handleClosePopup = () => {
+    dispatch(clearCart());
+    setPopupVisible(false);
+  };
+
   return (
     <div className="cart-container">
       <div className="cart-items">
@@ -30,23 +48,21 @@ const Cart = () => {
         <ul className="cart-item-list">
           {Object.keys(cartItems).map((itemId) => (
             <li key={itemId} className="cart-item">
-              {/* Item Image */}
               <img
                 src={cartItems[itemId].ItemImage}
                 alt={cartItems[itemId].ItemName}
                 className="cart-item-image"
               />
               <div>
-                {/* Item Name */}
                 <div className="cart-item-name">
                   {cartItems[itemId].ItemName}
                 </div>
-                {/* Item Price and Quantity */}
+
                 <div className="cart-item-price">
                   ₹{cartItems[itemId].ItemPrice} x {cartItems[itemId].itemCount}
                 </div>
               </div>
-              {/* Item Total */}
+
               <div className="cart-item-total">
                 ₹{cartItems[itemId].ItemPrice * cartItems[itemId].itemCount}
               </div>
@@ -65,15 +81,31 @@ const Cart = () => {
           </div>
           <div className="payment-summary-item">
             <span>Delivery:</span>
-            <span>₹10</span> {/* Placeholder for delivery fee */}
+            <span>₹10</span>
           </div>
           <div className="payment-summary-item">
             <span>Total:</span>
             <span>₹{totalAmount + 10}</span>
           </div>
         </div>
-        <button className="payment-button">Proceed to Checkout</button>
+        <button className="payment-button" onClick={handlePay}>
+          Proceed to Checkout
+        </button>
       </div>
+
+      {/* Popup */}
+      {isPopupVisible && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h3>Order Placed</h3>
+            <p>Thank you for shopping with us!</p>
+            <p>Your total is ₹{totalAmount + 10}.</p>
+            <button className="close-popup-button" onClick={handleClosePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

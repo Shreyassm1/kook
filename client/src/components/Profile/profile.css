@@ -1,0 +1,136 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profile-body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex; /* Add flex layout */
+  gap: 20px; /* Add spacing between form and item list */
+}
+
+/* Profile Update Section */
+.profile-update-box {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1; /* Allow form box to take up equal space */
+  max-width: 400px; /* Optional: Limit max width for form */
+}
+
+.profile-update form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-update label,
+.image-input-profile {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.profile-update input {
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  width: 100%;
+}
+
+.profile-update input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.profile-update-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-update-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Order History Section */
+.order-history-box {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  flex: 2; /* Allow item list to take up more space */
+  overflow-y: auto; /* Allow scrolling if content is too large */
+}
+
+.order-history-list {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.order-items-name {
+  margin-bottom: 20px;
+}
+
+/* .order-item {
+  margin-bottom: 5px;
+} */
+
+.order-item div {
+  font-size: 14px;
+  color: #555;
+}
+
+.order-item strong {
+  color: #007bff;
+}
+
+.order-item-total,
+.order-item-delivery,
+.order-item-status {
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.order-item-delivery {
+  font-style: italic;
+}
+
+.order-item-status {
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    gap: 20px;
+  }
+
+  .profile-update-box,
+  .order-history-box {
+    max-width: 100%;
+  }
+}

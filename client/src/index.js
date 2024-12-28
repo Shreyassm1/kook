@@ -15,6 +15,7 @@ import OwnerReg from "./pages/ownerReg";
 import OwnerLogin from "./pages/ownerLog";
 import Cart from "./pages/CartPage";
 import AddMenu from "./pages/addMenu";
+import ProfilePage from "./pages/ProfilePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -35,9 +36,9 @@ root.render(
           <Route path="canteen" element={<CanteenPage />} />
           <Route path="cart" element={<Cart />} />
           <Route path="getMenu/:canteenId" element={<CanteenPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           {/* Owner routes */}
           <Route path="ownerU" element={<AddCanteen />} />
-          {/* <Route path="ownerM" element={<AddMenu />} /> */}
           <Route path="menuUpload/:canteenId" element={<AddMenu />} />
         </Routes>
       </BrowserRouter>

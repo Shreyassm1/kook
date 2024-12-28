@@ -72,7 +72,9 @@ const OwnerMenu = () => {
             className="owner-menu-form__input"
             accept="image/*"
           />
-          <button type="submit">Add Item</button>
+          <button type="submit" className="owner-submit-btn">
+            Add Item
+          </button>
         </form>
 
         <div className="owner-menu-buttons">
