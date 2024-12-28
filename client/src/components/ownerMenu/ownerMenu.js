@@ -1,128 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import './ownerMenu.css';
+import React, { useState, useEffect } from "react";
+import "./ownerMenu.css";
+import { useParams, Link } from "react-router-dom";
+import useFetchData from "../../utils/useFetchData";
+import { logoutOwner } from "../../controllers/authCon";
 
 const OwnerMenu = () => {
-    const [ItemName, setItemName] = useState("");
-    const [ItemPrice, setItemPrice] = useState("");
-    const [ItemImage, setItemImage] = useState("");
-    const [ItemDescription, setItemDescription] = useState("");
-    const [token, setToken] = useState("");
+  const [items, setItems] = useState([]);
+  const { canteenId } = useParams();
 
-    useEffect(() => {
-        const getToken = () => {
-            const storedToken = localStorage.getItem('token');
-            if (storedToken) {
-                setToken(storedToken);
-            }
-        };
-        getToken();
-    }, []);
+  const {
+    data: menuData,
+    isLoading: isMenuLoading,
+    isError: isMenuError,
+  } = useFetchData(`http://localhost:8000/getMenu/${canteenId}`);
 
-    const handleImageUpload = async (e) => {
-        const file = e.target.files[0];
-        const apiKey = '363398383525658'; 
-        const cloudName = 'dh4hs9xvf';
-        const uploadPreset = 'ml_default';
-    
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', uploadPreset);
-    
-        try {
-            const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload?upload_preset=${uploadPreset}&api_key=${apiKey}`, {
-                method: 'POST',
-                body: formData
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                setItemImage(data.secure_url); 
-                console.log('Image uploaded successfully:', data);
-            } else {
-                console.error('Failed to upload image');
-            }
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
-    };
-    
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+  const {
+    data: canteenData,
+    isLoading: isCanteenLoading,
+    isError: isCanteenError,
+  } = useFetchData(`http://localhost:8000/getCanteenName/${canteenId}`);
 
-        try {
-            const requestData = {
-                ItemName,
-                ItemPrice,
-                ItemDescription,
-                ItemImage,
-            };
+  useEffect(() => {
+    if (menuData && menuData.length > 0) {
+      const updatedItems = menuData.map((item) => ({
+        ...item,
+        itemCount: 0, // Owner doesn't have item count for this view
+      }));
+      setItems(updatedItems);
+    }
+  }, [menuData]);
 
-            const response = await fetch('http://localhost:8000/menuUpload', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(requestData)
-            });
+  if (isMenuLoading || isCanteenLoading) {
+    return <div>Loading...</div>;
+  }
 
-            if (!response.ok) {
-                throw new Error('Failed to submit canteen data');
-            }
+  if (isMenuError || isCanteenError) {
+    return <div>Error fetching data.</div>;
+  }
 
-            console.log('Canteen data submitted successfully');
-            setItemName("");
-            setItemImage("");
-            setItemDescription("");
-            setItemPrice("");
+  const handleLogOut = () => {
+    const res = logoutOwner();
+    if (!res) {
+      throw new Error("Error logging out");
+    }
+    window.location.href = "/ownerL";
+  };
 
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+  return (
+    <div className="owner-menu-container">
+      <div className="owner-menu-title">{canteenData} - Manage Menu</div>
 
-    return (
-        <div className="ownerMenu__container">
-            <form className="ownerMenu__form" onSubmit={handleSubmit}>
-                <div className="ownerMenu__form__input">
-                    <input 
-                        type="text" 
-                        placeholder="Enter Item Name"
-                        value={ItemName}
-                        onChange={(event) => setItemName(event.target.value)}
-                        required
-                    />
-                </div>
-                <div className="ownerMenu__form__input">
-                    <input 
-                        type="text" 
-                        placeholder="Enter Item Price"
-                        value={ItemPrice}
-                        onChange={(event) => setItemPrice(event.target.value)}
-                        required
-                    />
-                </div>
-                <div className="ownerMenu__form__input">
-                    <input 
-                        type="text" 
-                        placeholder="Enter Item Description"
-                        value={ItemDescription}
-                        onChange={(event) => setItemDescription(event.target.value)}
-                        required
-                    />
-                </div>
-                <div className="ownerMenu__form__input">
-                    <input 
-                        type="file" 
-                        onChange={handleImageUpload}
-                        accept="image/*"
-                        required
-                    />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+      <div className="owner-menu-form-container">
+        <form className="owner-menu-form">
+          <input
+            type="text"
+            placeholder="Item Name"
+            className="owner-menu-form__input"
+          />
+          <input
+            type="text"
+            placeholder="Item Description"
+            className="owner-menu-form__input"
+          />
+          <input
+            type="number"
+            placeholder="Item Price"
+            className="owner-menu-form__input"
+          />
+          <input
+            type="file"
+            className="owner-menu-form__input"
+            accept="image/*"
+          />
+          <button type="submit">Add Item</button>
+        </form>
+
+        <div className="owner-menu-buttons">
+          <Link to={`/manage-items/${canteenId}`} className="owner-menu-button">
+            Manage Items
+          </Link>
+          <Link to={`/orders/${canteenId}`} className="owner-menu-button">
+            Go to Orders
+          </Link>
+          <button className="owner-menu-button" onClick={handleLogOut}>
+            Log Out
+          </button>
         </div>
-    );
+      </div>
+
+      <div className="owner-menu-items-list">
+        <h2>Current Items</h2>
+        {items.map((item) => (
+          <div key={item._id} className="owner-menu-item">
+            <img
+              src={item.ItemImage}
+              alt={item.ItemName}
+              className="owner-menu-item-image"
+            />
+            <div className="owner-menu-item-info">
+              <h3>{item.ItemName}</h3>
+              <p>{item.ItemDescription}</p>
+              <span>₹{item.ItemPrice}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default OwnerMenu;

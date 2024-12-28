@@ -10,6 +10,7 @@ const useFetchData = (url) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
+
         if (response.status < 200 || response.status >= 300) {
           throw new Error("Failed to fetch data");
         }

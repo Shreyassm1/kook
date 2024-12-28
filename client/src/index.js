@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import './index.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux"; // Import Provider
+import store from "./redux/store"; // Import your Redux store
 import reportWebVitals from "./reportWebVitals";
+
+// Import Pages
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -12,27 +15,34 @@ import OwnerReg from "./pages/ownerReg";
 import OwnerLogin from "./pages/ownerLog";
 import Cart from "./pages/CartPage";
 import AddMenu from "./pages/addMenu";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="" element={<RegisterPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="home" element={<HomePage />} />
-        <Route path="canteen" element={<CanteenPage />} />
-        <Route path="ownerU" element={<AddCanteen />} />
-        <Route path="ownerR" element={<OwnerReg />} />
-        <Route path="ownerM" element={<AddMenu />} />
-        <Route path="ownerL" element={<OwnerLogin />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="getMenu/:canteenId" element={<CanteenPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      {" "}
+      {/* Wrap the entire app with Redux Provider */}
+      <BrowserRouter>
+        <Routes>
+          {/* Common routes */}
+          <Route path="" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="ownerL" element={<OwnerLogin />} />
+          <Route path="ownerR" element={<OwnerReg />} />
+          {/* Student routes */}
+          <Route path="home" element={<HomePage />} />
+          <Route path="canteen" element={<CanteenPage />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="getMenu/:canteenId" element={<CanteenPage />} />
+          {/* Owner routes */}
+          <Route path="ownerU" element={<AddCanteen />} />
+          {/* <Route path="ownerM" element={<AddMenu />} /> */}
+          <Route path="menuUpload/:canteenId" element={<AddMenu />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

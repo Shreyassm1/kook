@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const Owner = require("../models/Owner");
 
-const verifyJWT = async (req, res, next) => {
+const verifyOwner = async (req, res, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
@@ -13,15 +13,15 @@ const verifyJWT = async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findById(decodedToken?._id).select(
+    const owner = await Owner.findById(decodedToken?._id).select(
       "-password -refreshToken"
     );
 
-    if (!user) {
+    if (!owner) {
       return res.status(401).json({ error: "Invalid Access token." });
     }
 
-    req.user = user;
+    req.owner = owner;
 
     next();
   } catch (error) {
@@ -29,4 +29,4 @@ const verifyJWT = async (req, res, next) => {
   }
 };
 
-module.exports = verifyJWT;
+module.exports = verifyOwner;

@@ -2,8 +2,12 @@ const express = require("express");
 const Canteen = require("../models/canteens");
 const router = express.Router();
 const mongoose = require("mongoose");
-//fetch canteen data from backend and upload it to frontend.
-router.get("/getCanteens", async (req, res) => {
+const verifyJWT = require("../middleware/isAuth");
+
+router.get("/getCanteens", verifyJWT, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: "Unauthorized access" });
+  }
   try {
     const canteens = await Canteen.find();
     if (!canteens || canteens.length === 0) {
@@ -22,7 +26,6 @@ router.get("/getCanteens", async (req, res) => {
         canteenId: canteen.canteenId,
       };
     });
-
     res.json(canteensData);
   } catch (error) {
     console.error("Error fetching canteens:", error);

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useFetchData from "../../utils/useFetchData";
+import { useNavigate } from "react-router-dom";
 import "./overView.css";
 
 const OverView = () => {
   const [canteens, setCanteens] = useState([]);
+  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useFetchData(
     "http://localhost:8000/getCanteens"
@@ -16,15 +18,24 @@ const OverView = () => {
   }, [data]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <h5>Loading...</h5>
+      </div>
+    );
   }
   if (isError) {
-    return <div>Error fetching data: {isError}</div>;
+    return (
+      <div>
+        <h1>You may not be logged in...</h1>
+      </div>
+    );
   }
 
   const handleClick = (canteenId) => {
     console.log("Canteen ID clicked:", canteenId);
-    window.location.href = `http://localhost:3000/getMenu/${canteenId}`;
+
+    navigate(`/getMenu/${canteenId}`);
   };
 
   console.log("Rendering OverView component...");

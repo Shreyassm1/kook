@@ -1,92 +1,114 @@
+/* Container for the page */
 .ownerPage__container {
-    font-family: 'Arial', sans-serif;
-    background-color: #8e44ad; /* Deep purple background */
-    background-image: url('./owner-bg.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f9; /* Light background for a clean, modern feel */
+  background-image: url("./owner-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
+/* Form styles */
 .ownerPage__form {
-    background-color: rgba(255, 255, 255, 0.9); /* Light, transparent white */
-    color: #2c3e50; /* Dark text color for readability */
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  background-color: #ffffff; /* Clean white background */
+  color: #333; /* Dark text for readability */
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Subtle shadow for modern look */
+  padding: 40px;
+  width: 100%;
+  max-width: 500px; /* Centering the form with max-width */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center; /* Centering content inside the form */
 }
 
-.ownerPage__form div {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
+/* Ensure inputs and buttons are the same width */
 .ownerPage__form input[type="text"],
-.ownerPage__form input[type="file"] {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #bdc3c7; /* Light gray border */
-    border-radius: 6px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: #ecf0f1; /* Light gray background for inputs */
-    color: #34495e; /* Dark text for input fields */
+.ownerPage__form input[type="file"],
+.ownerPage__form button {
+  width: 100%; /* Make the inputs and buttons take up full width */
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 6px;
+  background-color: #fafafa; /* Light background for inputs */
+  color: #555; /* Subtle dark text */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Focus effect for input fields */
 .ownerPage__form input[type="text"]:focus,
 .ownerPage__form input[type="file"]:focus {
-    border-color: #f39c12; /* Gold border on focus */
-    outline: none;
-    box-shadow: 0 0 4px rgba(243, 156, 18, 0.3); /* Gold glow effect */
+  border-color: #3498db; /* Blue border on focus */
+  outline: none;
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.3); /* Subtle glow */
 }
 
+/* Submit and logout buttons style */
 .ownerPage__form button {
-    background-color: #f39c12; /* Gold button */
-    color: #ffffff;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #3498db; /* Blue button for a clean, modern look */
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Space between the submit and logout buttons */
 }
 
 .ownerPage__form button:hover {
-    background-color: #e67e22; /* Darker gold on hover */
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
 .ownerPage__form button:active {
-    background-color: #d35400; /* Even darker gold when active */
+  background-color: #2471a3; /* Even darker blue when active */
 }
 
-.ownerPage__form button:focus {
-    outline: 2px solid #e67e22; /* Gold outline on focus */
-    outline-offset: 2px;
-}
-
+/* Placeholder styling */
 .ownerPage__form input::placeholder {
-    color: #95a5a6; /* Light gray placeholder text */
-    font-style: italic;
+  color: #b0b0b0; /* Light gray placeholder */
+  font-style: italic;
 }
 
-@media (max-width: 480px) {
-    .ownerPage__form {
-        padding: 20px;
-    }
+/* Logout button styling */
+.ownerPage__form .logoutButton {
+  background-color: #e74c3c; /* Red logout button */
+  color: #ffffff;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Space between the submit and logout buttons */
+}
 
-    .ownerPage__form input,
-    .ownerPage__form button {
-        font-size: 14px;
-        padding: 10px;
-    }
+.ownerPage__form .logoutButton:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.ownerPage__form .logoutButton:active {
+  background-color: #e74c3c; /* Even darker red when active */
+}
+
+/* Responsive design for small screens */
+@media (max-width: 480px) {
+  .ownerPage__form {
+    padding: 20px;
+  }
+
+  .ownerPage__form input,
+  .ownerPage__form button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .ownerPage__form .logoutButton {
+    font-size: 14px;
+    padding: 12px;
+  }
 }

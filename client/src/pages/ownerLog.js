@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import './register.css';
+import React, { useState } from "react";
+import "./register.css";
+import { loginOwner } from "../controllers/authCon";
 
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
@@ -11,63 +11,68 @@ const OwnerLogin = () => {
 
     const userData = {
       email,
-      password
+      password,
     };
 
     try {
-      const response = await fetch("http://localhost:8000/loginOwner", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
-      console.log(response)
-      if (!response.ok) {
-        throw new Error('Failed to login');
+      const response = await loginOwner(userData);
+      console.log("Login response:", response);
+      if (!response.success) {
+        throw new Error("Failed to login");
       }
 
-      const data = await response.json();
-      const token = data.token;
-      const hasCanteen = data.hasCanteen;  // Get the hasCanteen field from response
-      console.log("JWT Token:", token);
-      localStorage.setItem('token', token);
+      const hasCanteen = response.data.hasCanteen;
+      const canteenId = response.data.canteenId;
 
-      // Redirect based on the hasCanteen value
       if (hasCanteen) {
-        window.location.href = "http://localhost:3000/ownerM";  
+        window.location.href = `http://localhost:3000/menuUpload/${canteenId}`;
       } else {
-        window.location.href = "http://localhost:3000/ownerU"; 
+        window.location.href = "http://localhost:3000/ownerU";
       }
-
     } catch (error) {
       console.error("Error logging in:", error);
     }
   };
 
   return (
-    <div className='authentication'>
-      <div className='authentication-form'>
-        <div className='form-title'>Welcome Back</div>
-        <form layout='vertical'>
-          <div className='input-box-title'>
-            E-mail
+    <div className="authentication">
+      <div className="authentication-form">
+        <div className="form-title">Welcome Back</div>
+        <form layout="vertical">
+          <div className="input-box-title">E-mail</div>
+          <div className="input-box-uep">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="xyz@email.com"
+            />
           </div>
-          <div className='input-box-uep'>
-            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='xyz@email.com' />
+          <div className="input-box-title">Password</div>
+          <div className="input-box-uep">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="password"
+            />
           </div>
-          <div className='input-box-title'>
-            Password
+          <button
+            className="primary-button"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Login
+          </button>
+          <div className="links">
+            <a href="/ownerR" className="anchor">
+              Don't have an account?
+            </a>
           </div>
-          <div className='input-box-uep'>
-            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password' />
-          </div>
-          <button className='primary-button' type='submit' onClick={handleSubmit}>Login</button>
-          <div className='links'>
-            <Link to='/ownerR' className='anchor'>Don't have an account?</Link>
-          </div>
-          <div className='links'>
-            <Link to='/' className='anchor'>Click here if you are a student.</Link>
+          <div className="links">
+            <a href="/" className="anchor">
+              Click here if you are a student.
+            </a>
           </div>
         </form>
       </div>

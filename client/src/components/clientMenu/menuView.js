@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react";
 import "./menu.css";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"; // Import useSelector
 import useFetchData from "../../utils/useFetchData";
+import { addToCart, removeFromCart } from "../../redux/actions/cartActions";
+
 const Menu = () => {
   const [items, setItems] = useState([]);
   const { canteenId } = useParams();
+  const dispatch = useDispatch();
 
-  // Fetch menu items
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   const {
     data: menuData,
     isLoading: isMenuLoading,
     isError: isMenuError,
   } = useFetchData(`http://localhost:8000/getMenu/${canteenId}`);
 
-  // Fetch canteen name
   const {
     data: canteenData,
     isLoading: isCanteenLoading,
     isError: isCanteenError,
   } = useFetchData(`http://localhost:8000/getCanteenName/${canteenId}`);
 
-  // Initialize items with itemCount
   useEffect(() => {
     if (menuData && menuData.length > 0) {
       const updatedItems = menuData.map((item) => ({
         ...item,
-        itemCount: 0,
+        itemCount: cartItems[item._id] ? cartItems[item._id].itemCount : 0,
       }));
       setItems(updatedItems);
     }
-  }, [menuData]);
+  }, [menuData, cartItems]);
 
-  // Handle loading and error states
   if (isMenuLoading || isCanteenLoading) {
     return <div>Loading...</div>;
   }
@@ -40,6 +42,7 @@ const Menu = () => {
     return <div>Error fetching data.</div>;
   }
 
+  // Handle adding item to cart
   const handleAdd = (itemId) => {
     const updatedItems = items.map((item) => {
       if (item._id === itemId) {
@@ -47,7 +50,11 @@ const Menu = () => {
       }
       return item;
     });
+
     setItems(updatedItems);
+
+    const updatedItem = updatedItems.find((item) => item._id === itemId);
+    dispatch(addToCart(updatedItem));
   };
 
   const handleSub = (itemId) => {
@@ -57,7 +64,12 @@ const Menu = () => {
       }
       return item;
     });
+
     setItems(updatedItems);
+
+    if (updatedItems.find((item) => item._id === itemId).itemCount <= 0) {
+      dispatch(removeFromCart(itemId));
+    }
   };
 
   return (
@@ -103,4 +115,5 @@ const Menu = () => {
     </div>
   );
 };
+
 export default Menu;

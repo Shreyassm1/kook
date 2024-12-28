@@ -53,12 +53,46 @@ export const registerOwner = async (registrationData) => {
 
 export const logoutUser = async () => {
   try {
+    console.log("Logging out...");
     const response = await axios.post(`${BASE_URL}/logout`, {});
     console.log("Logout response:", response);
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Logout error:", error);
     return { success: false, error: "Logout failed" };
+  }
+};
+
+export const loginOwner = async (loginData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/loginOwner`, loginData);
+    console.log("loginOwner response:", response.data);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("loginOwner error:", error);
+    return { success: false, error: "login failed." };
+  }
+};
+
+export const logoutOwner = async () => {
+  console.log("logoutOwner");
+  try {
+    const response = await axios.post(`${BASE_URL}/logoutOwner`, {});
+    console.log(response);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("logoutOwner error:", error);
+    return { success: false, error: "logout failed." };
+  }
+};
+
+export const refreshOwnerToken = async () => {
+  try {
+    const response = await axios.post(`${BASE_URL}/refreshTokenOwner`, {});
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("refreshOwnerToken error:", error);
+    return { success: false, error: "refresh token failed." };
   }
 };
 
