@@ -21,11 +21,11 @@ router.post("/menuUpload/:canteenId", verifyOwner, async (req, res) => {
       ItemImage,
       canteenId: canteenId,
     };
-    //create itemInfo object to store in db
+
     await Menu.create(itemInfo);
     console.log("Item Info:", itemInfo);
 
-    return res.status(201).json({ message: "Menu uploaded successfully." }); //201 -> ok + resource created
+    return res.status(201).json({ message: "Menu uploaded successfully." });
   } catch (error) {
     console.error("Error in /menuUpload:", error);
     return res.status(500).json({ error: "Internal Server error." });

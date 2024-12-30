@@ -3,15 +3,22 @@ import "./menu.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"; // Import useSelector
 import useFetchData from "../../utils/useFetchData";
-import { addToCart, removeFromCart } from "../../redux/actions/cartActions";
+import {
+  addToCart,
+  removeFromCart,
+  incrementItem,
+  decrementItem,
+} from "../../redux/actions/cartActions";
 
 const Menu = () => {
   const [items, setItems] = useState([]);
   const { canteenId } = useParams();
   const dispatch = useDispatch();
 
+  // Redux cart state
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  // Fetch menu and canteen data
   const {
     data: menuData,
     isLoading: isMenuLoading,
@@ -24,16 +31,17 @@ const Menu = () => {
     isError: isCanteenError,
   } = useFetchData(`http://localhost:8000/getCanteenName/${canteenId}`);
 
+  // Effect to update items with itemCount and cart data
   useEffect(() => {
-    if (menuData && menuData.length > 0) {
-      const updatedItems = menuData.map((item) => ({
-        ...item,
-        itemCount: cartItems[item._id] ? cartItems[item._id].itemCount : 0,
-      }));
-      setItems(updatedItems);
-    }
+    // Map menu data with itemCount from the Redux cartItems
+    const newData = menuData.map((item) => ({
+      ...item,
+      itemCount: cartItems[item._id] ? cartItems[item._id].itemCount : 0,
+    }));
+    setItems(newData);
   }, [menuData, cartItems]);
 
+  // Handle loading or error states
   if (isMenuLoading || isCanteenLoading) {
     return <div>Loading...</div>;
   }
@@ -44,31 +52,29 @@ const Menu = () => {
 
   // Handle adding item to cart
   const handleAdd = (itemId) => {
-    const updatedItems = items.map((item) => {
-      if (item._id === itemId) {
-        return { ...item, itemCount: item.itemCount + 1 };
-      }
-      return item;
-    });
+    const updatedItem = items.find((item) => item._id === itemId);
+    if (!updatedItem) return; // If item doesn't exist, do nothing
 
-    setItems(updatedItems);
-
-    const updatedItem = updatedItems.find((item) => item._id === itemId);
-    dispatch(addToCart(updatedItem));
+    if (updatedItem.itemCount === 0) {
+      // If item is not in the cart yet, add it
+      dispatch(addToCart(updatedItem)); // Dispatch action with the whole item
+    } else {
+      // If item is already in the cart, increment its count
+      dispatch(incrementItem(updatedItem)); // Dispatch increment action with the whole item
+    }
   };
 
+  // Handle subtracting item from cart
   const handleSub = (itemId) => {
-    const updatedItems = items.map((item) => {
-      if (item._id === itemId && item.itemCount > 0) {
-        return { ...item, itemCount: item.itemCount - 1 };
-      }
-      return item;
-    });
+    const updatedItem = items.find((item) => item._id === itemId);
+    if (!updatedItem || updatedItem.itemCount === 0) return; // Do nothing if count is 0
 
-    setItems(updatedItems);
-
-    if (updatedItems.find((item) => item._id === itemId).itemCount <= 0) {
-      dispatch(removeFromCart(itemId));
+    if (updatedItem.itemCount === 1) {
+      // If count is 1, remove the item from the cart
+      dispatch(removeFromCart(itemId)); // Dispatch remove action with itemId
+    } else {
+      // Otherwise, decrement the count
+      dispatch(decrementItem(updatedItem)); // Dispatch decrement action with the whole item
     }
   };
 
