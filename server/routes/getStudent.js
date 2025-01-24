@@ -16,6 +16,7 @@ router.get("/getStudent", verifyJWT, async (req, res) => {
     return res.status(500).json({ error: "Internal server error." });
   }
 });
+
 router.post("/updateAddress", verifyJWT, async (req, res) => {
   try {
     if (!req.user) {

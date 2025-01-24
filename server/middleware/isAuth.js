@@ -3,10 +3,7 @@ const User = require("../models/User");
 
 const verifyJWT = async (req, res, next) => {
   try {
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
-
+    const token = req.cookies?.accessToken;
     if (!token) {
       return res.status(401).json({ error: "Unauthorized access" });
     }
@@ -15,15 +12,14 @@ const verifyJWT = async (req, res, next) => {
 
     const user = await User.findById(decodedToken?._id).select(
       "-password -refreshToken"
-    );
+    ); //.select() is used to include or exclude specified field in query result. '-' represents exclusion.
 
     if (!user) {
       return res.status(401).json({ error: "Invalid Access token." });
     }
 
     req.user = user;
-
-    next();
+    next(); //gives control to the route handler or next middleware.
   } catch (error) {
     return res.status(401).json({ error: "Invalid access token." });
   }

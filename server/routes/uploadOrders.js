@@ -27,7 +27,7 @@ router.post("/uploadOrder", verifyJWT, async (req, res) => {
       items: items,
       amount,
       address: hostelName,
-      delivery: "test",
+      delivery: "test", //figure out logic for managing delivery status
     };
 
     await Order.create(orderInfo);

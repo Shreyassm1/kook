@@ -3,9 +3,7 @@ const Owner = require("../models/Owner");
 
 const verifyOwner = async (req, res, next) => {
   try {
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
+    const token = req.cookies?.accessToken;
 
     if (!token) {
       return res.status(401).json({ error: "Unauthorized access" });
@@ -22,7 +20,6 @@ const verifyOwner = async (req, res, next) => {
     }
 
     req.owner = owner;
-
     next();
   } catch (error) {
     return res.status(401).json({ error: "Invalid access token." });

@@ -11,6 +11,7 @@ const useFetchData = (url) => {
       try {
         const response = await axios.get(url);
 
+        //do responses for each status from backend code.
         if (response.status < 200 || response.status >= 300) {
           throw new Error("Failed to fetch data");
         }

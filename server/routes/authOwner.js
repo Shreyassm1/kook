@@ -17,7 +17,7 @@ const generateAccessAndRefreshTokens = async (ownerId) => {
     const accessToken = generateAccessToken(ownerId);
 
     user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+    await user.save();
 
     return { refreshToken, accessToken };
   } catch (error) {
@@ -29,60 +29,88 @@ const generateAccessAndRefreshTokens = async (ownerId) => {
 
 require("dotenv").config();
 
-// Signup route - local authentication
+//-----------------------------------------------------------OWNER REGISTER FLOW-------------------------------------------------------
+//1.Take registration info from user.(assuming frontend sends some sort of value in each field)
+//2.Check if user with above credentials already exists or not.
+//3.If False --> return status 409, conflict.
+//4.Encrypt the password before saving to db.
+//5.Save data to user model.
+//6.Return status 200.
+//------------------------------------------------------------------------------------------------------------------------------------
+
 router.post("/registerOwner", async (req, res) => {
   try {
-    // Extract the request received from frontend into the following variables
     const { username, email, password } = req.body;
-    console.log("Received registration request:", req.body);
+    // console.log("Received registration request:", req.body);
 
-    // Checks if username, email, and password are provided and if they are unique
     if (!username || !email || !password) {
       return res
-        .status(400)
+        .status(400) //Bad Request error
         .json({ error: "Username, email, and password are required" });
     }
 
     const existingOwner = await Owner.findOne({ email });
     if (existingOwner) {
-      return res.status(409).json({ error: "Email is already registered" }); // 409 - conflict
+      return res
+        .status(409) //conflict error
+        .json({ error: "Email is already registered" });
     }
 
-    // Hash the password and store in DB
     const hashedPassword = await bcrypt.hash(password, 10);
     const newOwner = new Owner({
       username,
       email,
       password: hashedPassword,
-      hasCanteen: false, // Initialize the owner with no canteen
+      // hasCanteen: false, --> already defaulted to false in model.
     });
 
     await newOwner.save();
-    return res.status(200).json({ message: "Owner Registered" });
+    return res
+      .status(200) //OK
+      .json({ message: "Owner Registered successfully" });
   } catch (error) {
-    console.error("Error in signup route:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    // console.error("Error in signup route:", error);
+    return res
+      .status(500) //Internal Server Error
+      .json({ error: "Internal Server Error" });
   }
 });
 
-// Login route for local authentication
+//-----------------------------------------------------------OWNER LOGIN FLOW----------------------------------------------------------
+//1.Take login details from user.(Assuming frontend sends valid values for all required fields.)
+//2.Check whether email exists in the user db.
+//3.If False --> return status 401, unauthorized.
+//4.decrypt the password and compare with the password in login data.
+//5.If False --> return status 401, password invalid, unauthorized.
+//6.Generate Access and Refresh Tokens:
+//(a)Access Tokens contain user id, username and email for easy access and authentication.
+//(b)Refresh Token contain user id and is saved in the db for future reference and use.
+//7.Return status 200 with the above tokens passed into the cookies.
+//------------------------------------------------------------------------------------------------------------------------------------
+
 router.post("/loginOwner", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+      return res
+        .status(400) //Bad request
+        .json({ error: "Email and password are required" });
     }
 
     const owner = await Owner.findOne({ email });
 
     if (!owner) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res
+        .status(401) //Unauthorized - lacks valid authentication credentials.
+        .json({ error: "Invalid email or password" });
     }
 
     const passwordMatch = await bcrypt.compare(password, owner.password);
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res
+        .status(401) //Unauthorized - password is invalid.
+        .json({ error: "Invalid email or password" });
     }
 
     const { refreshToken, accessToken } = await generateAccessAndRefreshTokens(
@@ -95,15 +123,23 @@ router.post("/loginOwner", async (req, res) => {
       secure: true,
     };
     return res
-      .status(200)
+      .status(200) //success
       .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
       .json({ hasCanteen, canteenId });
   } catch (error) {
     console.error("Error in login route:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res
+      .status(500) // Internal Server Error
+      .json({ error: "Internal Server Error" });
   }
 });
+
+//-----------------------------------------------------------OWNER LOGOUT FLOW----------------------------------------------------------
+//1.Set refreshToken to null after logout.
+//2.Clear cookies - refresh and access token.
+//Model.findByIdAndUpdate(id, update, options, callback);
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 router.post("/logoutOwner", verifyOwner, async (req, res) => {
   try {
@@ -113,7 +149,7 @@ router.post("/logoutOwner", verifyOwner, async (req, res) => {
         $set: { refreshToken: null },
       },
       {
-        new: true,
+        new: true, //returns new updated object instead of original, when set to true.
       }
     );
     const options = {
@@ -121,15 +157,26 @@ router.post("/logoutOwner", verifyOwner, async (req, res) => {
       secure: true,
     };
     return res
-      .status(200)
+      .status(200) //success
       .clearCookie("accessToken", options)
       .clearCookie("refreshToken", options)
       .json({ message: "User logged out successfully" });
   } catch (error) {
     console.error("Error in logout route:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return res
+      .status(500) //Internal Server Error
+      .json({ error: "Internal Server Error" });
   }
 });
+
+//-----------------------------------------------------------REFRESH TOKEN FLOW----------------------------------------------------------
+//1.Check for refresh token in cookies.
+//2.If FALSE --> owner is not logged in (refresh token removed on logout).
+//3.Decode token and retrieve ownerID.
+//4.FindById refresh token and match with refresh token from cookie.
+//5.If FALSE --> invalid token.
+//6.Log in owner without authentication(session has not expired).
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 router.post("/refreshTokenOwner", async (req, res) => {
   try {

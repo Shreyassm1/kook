@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+//cart object --> {array[...],key}
+//items array --> [canteenid, itemid, itemdetails...]
+
 const cartSchema = mongoose.Schema({
   items: [
     {

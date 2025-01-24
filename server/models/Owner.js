@@ -15,7 +15,7 @@ const ownerSchema = mongoose.Schema({
   },
   hasCanteen: {
     type: Boolean,
-    default: false, // Default to false, meaning no canteen
+    default: false, // Default to false, meaning no canteen.
   },
   refreshToken: {
     type: String,
