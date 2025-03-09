@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -171,4 +171,19 @@
     padding: 15px 0;
     text-align: center;
   }
+} */
+
+.owner-home-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.owner-home-header {
+  font-family: "Roboto", sans-serif;
+}
+.owner-home-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

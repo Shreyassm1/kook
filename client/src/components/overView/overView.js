@@ -8,7 +8,7 @@ const OverView = () => {
   const navigate = useNavigate();
 
   const { data, isLoading, isError } = useFetchData(
-    "http://localhost:8000/getCanteens"
+    "https://kook-bqcr.onrender.com/getCanteens"
   );
 
   useEffect(() => {

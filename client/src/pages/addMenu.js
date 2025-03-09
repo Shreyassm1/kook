@@ -1,10 +1,10 @@
-import React from 'react';
-import OwnerMenu from '../components/ownerMenu/ownerMenu';  
+import React from "react";
+import OwnerHome from "../components/ownerMenu/OwnerHome";
 
 const AddMenu = () => {
-  return(
+  return (
     <div>
-      <OwnerMenu />
+      <OwnerHome />
     </div>
   );
 };

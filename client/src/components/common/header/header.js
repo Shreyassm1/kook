@@ -8,7 +8,7 @@ import useFetchData from "../../../utils/useFetchData";
 const Header = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useFetchData(
-    "http://localhost:8000/getStudent"
+    "https://kook-bqcr.onrender.com/getStudent"
   );
 
   const { userName, profilePicture } = data;
@@ -147,7 +147,6 @@ const Header = () => {
             <div className="cart-icon">
               <i className="fa-solid fa-cart-shopping"></i>
             </div>
-            <div className="cart-text">{/* Cart */}</div>
           </div>
           <div className="logout-btn" onClick={handleLogout}>
             <i className="fa-solid fa-sign-out"></i>

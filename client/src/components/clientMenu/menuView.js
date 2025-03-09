@@ -23,13 +23,15 @@ const Menu = () => {
     data: menuData,
     isLoading: isMenuLoading,
     isError: isMenuError,
-  } = useFetchData(`http://localhost:8000/getMenu/${canteenId}`);
+  } = useFetchData(`https://kook-bqcr.onrender.com/getMenu/${canteenId}`);
 
   const {
     data: canteenData,
     isLoading: isCanteenLoading,
     isError: isCanteenError,
-  } = useFetchData(`http://localhost:8000/getCanteenName/${canteenId}`);
+  } = useFetchData(
+    `https://kook-bqcr.onrender.com/getCanteenName/${canteenId}`
+  );
 
   // Effect to update items with itemCount and cart data
   useEffect(() => {

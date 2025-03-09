@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://kook-bqcr.onrender.com";
 
 export const uploadOrder = async (orderInfo) => {
   console.log("order: ", orderInfo);

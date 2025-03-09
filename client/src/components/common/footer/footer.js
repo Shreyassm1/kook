@@ -7,7 +7,7 @@ const Footer = () => {
     <div className="bg-box">
       <div className="max-width">
         <div className="absolute-centre">
-          <div className="footer-content">With ❤️ ~ SMxDM</div>
+          <div className="footer-content">With ❤️ ~ SM</div>
         </div>
       </div>
     </div>

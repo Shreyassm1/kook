@@ -12,7 +12,7 @@ const OwnerPage = () => {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     const cloudName = "dh4hs9xvf";
-    const uploadPreset = "ml_default";
+    const uploadPreset = "ml_default1";
 
     const formData = new FormData();
     formData.append("file", file);
@@ -43,7 +43,7 @@ const OwnerPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/ownerPost",
+        "https://kook-bqcr.onrender.com/ownerPost",
         requestData,
         {
           headers: {

@@ -9,7 +9,7 @@ const Profile = () => {
   const [roomNumber, setRoomNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const { data, isLoading, isError } = useFetchData(
-    "http://localhost:8000/getOrders"
+    "https://kook-bqcr.onrender.com/getOrders"
   );
 
   const handleProfileUpdate = async (event) => {
