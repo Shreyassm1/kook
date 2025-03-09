@@ -10,8 +10,9 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(bodyParser.json());
 const cors = require("cors");
+const allowedOrigins = ["http://localhost:3000", "https://kook-six.vercel.app"];
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: allowedOrigins,
   credentials: true,
   optionSuccessStatus: 200,
 };
