@@ -5,7 +5,7 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
+// import "./OwnerHome.css";
 const OwnerHome = () => {
   const { canteenId } = useParams();
   const [items, setItems] = useState([]);
@@ -13,8 +13,6 @@ const OwnerHome = () => {
   const [ItemPrice, setItemPrice] = useState("");
   const [ItemDescription, setItemDescription] = useState("");
   const [ItemImage, setItemImage] = useState("");
-  const [uploading, setUploading] = useState(false); // Track upload state
-
   const {
     data: canteenData,
     isLoading: isCanteenLoading,
@@ -22,7 +20,6 @@ const OwnerHome = () => {
   } = useFetchData(
     `https://kook-bqcr.onrender.com/getCanteenName/${canteenId}`
   );
-
   const {
     data: menuData,
     isLoading: isMenuLoading,
@@ -31,26 +28,28 @@ const OwnerHome = () => {
 
   useEffect(() => {
     if (menuData && menuData.length > 0) {
-      setItems(menuData);
+      const listedItems = menuData.map((item) => ({
+        ...item,
+      }));
+      setItems(listedItems);
     }
   }, [menuData]);
+  console.log(items);
 
-  if (isMenuLoading || isCanteenLoading) return <div>Loading...</div>;
-  if (isMenuError || isCanteenError) return <div>Error fetching data.</div>;
+  if (isMenuLoading || isCanteenLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isMenuError || isCanteenError) {
+    return <div>Error fetching data.</div>;
+  }
 
   const updateItemPopUp = () => {};
-
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-
-    if (!file) return alert("No file selected!");
-    if (!file.type.startsWith("image/"))
-      return alert("Please upload an image file.");
-    if (file.size > 10 * 1024 * 1024)
-      return alert("File size must be under 10MB.");
-
     const cloudName = "dh4hs9xvf";
     const uploadPreset = "ml_default1";
+    console.log(file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
@@ -58,31 +57,24 @@ const OwnerHome = () => {
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
       setItemImage(response.data.secure_url);
       console.log("Image uploaded successfully:", response.data);
     } catch (error) {
-      console.error(
-        "Error uploading image:",
-        error.response?.data || error.message
-      );
-      alert("Failed to upload image. Please try again.");
+      console.error("Error uploading image:", error);
     }
   };
-
+  // const handleLogOut = () => {
+  //   const res = logoutOwner();
+  //   if (!res) {
+  //     throw new Error("Error logging out");
+  //   }
+  //   window.location.href = "/ownerL";
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (!ItemName || !ItemPrice || !ItemDescription || !ItemImage) {
-      return alert("Please fill in all fields before submitting.");
-    }
 
     const requestData = {
       canteenId,
@@ -103,18 +95,15 @@ const OwnerHome = () => {
         }
       );
 
-      console.log("Menu item added successfully:", response.data);
+      console.log("Menu data submitted successfully:", response.data);
 
+      // Reset form fields
       setItemName("");
-      setItemPrice("");
       setItemDescription("");
-      setItemImage(""); // Reset the image URL
+      setItemPrice("");
+      setItemImage("");
     } catch (error) {
-      console.error(
-        "Error adding menu item:",
-        error.response?.data || error.message
-      );
-      alert("Failed to add menu item. Please try again.");
+      console.error("Error submitting canteen data:", error);
     }
   };
 
@@ -123,44 +112,56 @@ const OwnerHome = () => {
       <div className="owner-home-header">
         <div className="canteeen-name-owner-home">{canteenData}</div>
         <div className="add-item-btn">
-          <Popup trigger={<button>Click to open modal</button>} modal nested>
+          <Popup trigger={<button> Click to open modal </button>} modal nested>
             {(close) => (
               <div className="add-item-window">
-                <h2>Add Item</h2>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    placeholder="Enter Item Name"
-                    value={ItemName}
-                    onChange={(e) => setItemName(e.target.value)}
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Enter Item Price"
-                    value={ItemPrice}
-                    onChange={(e) => setItemPrice(e.target.value)}
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Enter Item Description"
-                    value={ItemDescription}
-                    onChange={(e) => setItemDescription(e.target.value)}
-                    required
-                  />
-                  <input
-                    type="file"
-                    onChange={handleImageUpload}
-                    accept="image/*"
-                    required
-                  />
-                  {uploading && <p>Uploading image...</p>}
-                  <button type="submit" disabled={uploading}>
-                    {uploading ? "Uploading..." : "Add Item"}
+                Update Item
+                <form>
+                  <div className="add-item-name">
+                    <input
+                      type="text"
+                      placeholder="Enter Item Name"
+                      value={ItemName}
+                      onChange={(e) => setItemName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="add-item-price">
+                    <input
+                      type="text"
+                      placeholder="Enter Item Price"
+                      value={ItemPrice}
+                      onChange={(e) => setItemPrice(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="add-item-description">
+                    <input
+                      type="text"
+                      placeholder="Enter Item Description"
+                      value={ItemDescription}
+                      onChange={(e) => setItemDescription(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="add-item-image">
+                    <input
+                      type="file"
+                      onChange={handleImageUpload}
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                  <button
+                    className="submit-add-item-btn"
+                    onClick={handleSubmit}
+                  >
+                    Add Item
                   </button>
                 </form>
-                <button onClick={close}>Close</button>
+                <div>
+                  <button onClick={() => close()}>Close</button>
+                </div>
               </div>
             )}
           </Popup>
@@ -169,13 +170,12 @@ const OwnerHome = () => {
           <i className="fa-solid fa-sign-out">Logout</i>
         </div>
       </div>
-
       <div className="owner-home-body">
         <div className="owner-menu-update-container">
-          <h3>Menu Items</h3>
+          Menu Items
           <div className="owner-menu-items-box">
             {items.map((item) => (
-              <div key={item._id} className="owner-menu-item">
+              <div className="owner-menu-item">
                 <img
                   src={item.ItemImage}
                   alt={item.ItemName}
@@ -197,7 +197,7 @@ const OwnerHome = () => {
           </div>
         </div>
         <div className="owner-profile-update-container">
-          <h3>Update Canteen Info Here</h3>
+          Update Canteen Info Here
         </div>
       </div>
     </div>
