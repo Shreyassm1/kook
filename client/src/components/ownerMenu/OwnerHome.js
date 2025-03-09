@@ -57,7 +57,8 @@ const OwnerHome = () => {
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
+        formData,
+        { withCredentials: false }
       );
 
       setItemImage(response.data.secure_url);
