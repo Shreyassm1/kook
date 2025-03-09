@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+axios.defaults.withCredentials = true;
 
 const useFetchData = (url) => {
   const [data, setData] = useState([]);
