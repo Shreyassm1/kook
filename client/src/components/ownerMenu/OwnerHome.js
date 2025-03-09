@@ -49,7 +49,7 @@ const OwnerHome = () => {
     const file = e.target.files[0];
     const cloudName = "dh4hs9xvf";
     const uploadPreset = "ml_default1";
-
+    console.log(file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
