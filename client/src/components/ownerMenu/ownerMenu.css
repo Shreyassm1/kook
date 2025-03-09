@@ -1,17 +1,13 @@
-/* General Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 .owner-menu-body {
   font-family: "Roboto", sans-serif;
   background-color: #f8f8f8;
   color: #333;
 }
-
-/* Owner Menu Container */
 .owner-menu-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -25,8 +21,6 @@
   text-align: center;
   margin-bottom: 20px;
 }
-
-/* Form Section */
 .owner-menu-form-container {
   background-color: #fff;
   padding: 30px;
@@ -69,7 +63,6 @@
   background-color: #54ab80;
 }
 
-/* Buttons for Navigation */
 .owner-menu-buttons {
   display: flex;
   justify-content: space-between;
@@ -88,10 +81,10 @@
 }
 
 .owner-menu-button:hover {
-  background-color: #54ab80;
+  background-color: #44ab78;
+  cursor: pointer;
 }
 
-/* Items List Section */
 .owner-menu-items-list {
   background-color: #fff;
   padding: 20px;
@@ -149,7 +142,6 @@
   color: #54ab80;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .owner-menu-container {
     padding: 20px;

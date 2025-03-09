@@ -71,7 +71,6 @@ const Cart = () => {
         </ul>
       </div>
 
-      {/* Payment Container */}
       <div className="payment-summary-container">
         <h3 className="payment-header">Payment</h3>
         <div className="payment-summary">
@@ -93,7 +92,6 @@ const Cart = () => {
         </button>
       </div>
 
-      {/* Popup */}
       {isPopupVisible && (
         <div className="popup-overlay">
           <div className="popup">

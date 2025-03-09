@@ -7,6 +7,7 @@ import { logoutOwner } from "../../controllers/authCon";
 const OwnerMenu = () => {
   const [items, setItems] = useState([]);
   const { canteenId } = useParams();
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
   const {
     data: menuData,
@@ -24,7 +25,7 @@ const OwnerMenu = () => {
     if (menuData && menuData.length > 0) {
       const updatedItems = menuData.map((item) => ({
         ...item,
-        itemCount: 0, // Owner doesn't have item count for this view
+        itemCount: 0,
       }));
       setItems(updatedItems);
     }
@@ -44,6 +45,10 @@ const OwnerMenu = () => {
       throw new Error("Error logging out");
     }
     window.location.href = "/ownerL";
+  };
+
+  const handleUpdateItem = () => {
+    setPopupVisible(true);
   };
 
   return (
@@ -78,9 +83,6 @@ const OwnerMenu = () => {
         </form>
 
         <div className="owner-menu-buttons">
-          <Link to={`/manage-items/${canteenId}`} className="owner-menu-button">
-            Manage Items
-          </Link>
           <Link to={`/orders/${canteenId}`} className="owner-menu-button">
             Go to Orders
           </Link>
@@ -103,6 +105,9 @@ const OwnerMenu = () => {
               <h3>{item.ItemName}</h3>
               <p>{item.ItemDescription}</p>
               <span>₹{item.ItemPrice}</span>
+            </div>
+            <div className="update-menu-item" onClick={handleUpdateItem}>
+              <button className="owner-menu-button">Update</button>
             </div>
           </div>
         ))}

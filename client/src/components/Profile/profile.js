@@ -79,7 +79,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Order History */}
       <div className="order-history-box">
         <div className="order-history-box-title">Order History</div>
         {orders.map((order) => (
@@ -98,7 +97,7 @@ const Profile = () => {
               <strong>Total Amount: </strong> ₹{order.amount}
             </div>
             <div className="order-item-delivery">
-              <strong>Delivery Address:</strong>{" "}
+              <strong>Delivery Address: </strong>
               {order.address || "Not provided"}
             </div>
             <div className="order-item-status">
