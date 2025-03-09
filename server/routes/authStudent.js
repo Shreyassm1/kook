@@ -148,6 +148,7 @@ router.post("/login", async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      sameSite: "None",
     };
     return res
       .status(200) //OK
@@ -176,6 +177,7 @@ router.post("/logout", verifyJWT, async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   };
   return res
     .status(200) //OK

@@ -121,6 +121,7 @@ router.post("/loginOwner", async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      sameSite: "None",
     };
     return res
       .status(200) //success
@@ -155,6 +156,7 @@ router.post("/logoutOwner", verifyOwner, async (req, res) => {
     const options = {
       httpOnly: true,
       secure: true,
+      sameSite: "None",
     };
     return res
       .status(200) //success
