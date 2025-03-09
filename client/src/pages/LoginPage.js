@@ -14,7 +14,7 @@ function Register() {
   const googleAuth = async (e) => {
     e.preventDefault();
     // Redirect user to OAuth2 authentication route on backend
-    window.location.href = "http://localhost:8000/auth/google";
+    window.location.href = "https://kook-bqcr.onrender.com/auth/google";
   };
 
   const handleSubmit = async (e) => {

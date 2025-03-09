@@ -25,9 +25,9 @@ const OwnerLogin = () => {
       const canteenId = response.data.canteenId;
 
       if (hasCanteen) {
-        window.location.href = `http://localhost:3000/menuUpload/${canteenId}`;
+        window.location.href = `https://kook-six.vercel.app/menuUpload/${canteenId}`;
       } else {
-        window.location.href = "http://localhost:3000/ownerU";
+        window.location.href = "https://kook-six.vercel.app/ownerU";
       }
     } catch (error) {
       console.error("Error logging in:", error);

@@ -13,6 +13,7 @@ const verifyJWT = require("../middleware/isAuth");
 //-------------------------------------------------------------------------------------------------------------------------------------
 
 router.get("/getCanteens", verifyJWT, async (req, res) => {
+  console.log(req.user);
   if (!req.user) {
     return res.status(401).json({ error: "Unauthorized access" });
   }
