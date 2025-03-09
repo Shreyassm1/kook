@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-axios.defaults.withCredentials = true;
 
 const useFetchData = (url) => {
   const [data, setData] = useState([]);
@@ -10,7 +9,7 @@ const useFetchData = (url) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, { withCredentials: true });
 
         //do responses for each status from backend code.
         if (response.status < 200 || response.status >= 300) {
