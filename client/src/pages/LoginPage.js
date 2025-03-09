@@ -28,7 +28,7 @@ function Register() {
     try {
       const response = await loginUser(registrationData);
       if (response.success === false) {
-        navigate("/"); // Use navigate for routing to home page
+        navigate("/");
       } else {
         navigate("/home"); // Navigate to home if login is successful
       }
