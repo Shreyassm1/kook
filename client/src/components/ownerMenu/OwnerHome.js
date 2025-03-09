@@ -51,8 +51,6 @@ const OwnerHome = () => {
 
     const cloudName = "dh4hs9xvf";
     const uploadPreset = "ml_default1";
-
-    setUploading(true); // Show uploading state
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
@@ -60,8 +58,14 @@ const OwnerHome = () => {
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+
       setItemImage(response.data.secure_url);
       console.log("Image uploaded successfully:", response.data);
     } catch (error) {
@@ -70,8 +74,6 @@ const OwnerHome = () => {
         error.response?.data || error.message
       );
       alert("Failed to upload image. Please try again.");
-    } finally {
-      setUploading(false);
     }
   };
 
