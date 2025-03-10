@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import useFetchData from "../../utils/useFetchData";
 import { useNavigate } from "react-router-dom";
 import "./overView.css";
-
+const BASE_URL = process.env.REACT_APP_BASE_URL_S;
 const OverView = () => {
   const [canteens, setCanteens] = useState([]);
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useFetchData(
-    "https://kook-bqcr.onrender.com/getCanteens"
-  );
+  const { data, isLoading, isError } = useFetchData(`${BASE_URL}/getCanteens`);
 
   useEffect(() => {
     if (data && data.length > 0) {

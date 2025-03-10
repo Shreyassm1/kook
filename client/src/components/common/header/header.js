@@ -4,12 +4,11 @@ import logo from "./logo.png";
 import { logoutUser } from "../../../controllers/authCon";
 import { useNavigate } from "react-router-dom";
 import useFetchData from "../../../utils/useFetchData";
-
+const BASE_URLS = process.env.REACT_APP_BASE_URL_S;
+// const BASE_URLC = "https://kook-six.vercel.app";
 const Header = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useFetchData(
-    "https://kook-bqcr.onrender.com/getStudent"
-  );
+  const { data, isLoading, isError } = useFetchData(`${BASE_URLS}/getStudent`);
 
   const { userName, profilePicture } = data;
   if (isLoading) {

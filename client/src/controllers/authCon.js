@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-const BASE_URL = "https://kook-bqcr.onrender.com";
+const BASE_URL = process.env.REACT_APP_BASE_URL_S;
 
 export const registerUser = async (registrationData) => {
   try {

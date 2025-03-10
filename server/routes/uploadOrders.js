@@ -11,23 +11,22 @@ router.post("/uploadOrder", verifyJWT, async (req, res) => {
     }
 
     const userId = req.user._id;
-    const { cartItems, amount } = req.body;
+    const { canteenId, cartItems, amount } = req.body;
     const items = [];
 
-    for (const itemId in cartItems) {
-      const { ItemName, itemCount } = cartItems[itemId];
-      items.push({ itemName: ItemName, quantity: itemCount });
+    for (const j in cartItems) {
+      const { ItemName, itemCount } = cartItems[j];
+      items.push({ ItemId: j, itemName: ItemName, quantity: itemCount }); //
     }
-
     const userAddress = await Address.findOne({ userId });
     const hostelName = userAddress ? userAddress.hostel : null;
 
     const orderInfo = {
       userId: userId,
+      canteenId: canteenId,
       items: items,
       amount,
       address: hostelName,
-      delivery: "test", //figure out logic for managing delivery status
     };
 
     await Order.create(orderInfo);

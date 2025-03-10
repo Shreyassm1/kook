@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./register.css";
 import { loginOwner } from "../controllers/authCon";
-
+// const BASE_URLS = "https://kook-bqcr.onrender.com";
+const BASE_URLC = process.env.REACT_APP_BASE_URL_C;
 const OwnerLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,9 +26,9 @@ const OwnerLogin = () => {
       const canteenId = response.data.canteenId;
 
       if (hasCanteen) {
-        window.location.href = `https://kook-six.vercel.app/menuUpload/${canteenId}`;
+        window.location.href = `${BASE_URLC}/menuUpload/${canteenId}`;
       } else {
-        window.location.href = "https://kook-six.vercel.app/ownerU";
+        window.location.href = `${BASE_URLC}/ownerU`;
       }
     } catch (error) {
       console.error("Error logging in:", error);

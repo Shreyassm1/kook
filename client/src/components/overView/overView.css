@@ -36,8 +36,8 @@ body {
 .canteen-cards {
   display: flex;
   flex-direction: column;
-  width: 280px; /* Fixed width for uniform size */
-  height: 360px; /* Fixed height for uniform size */
+  width: 280px;
+  height: 360px;
   margin: 0;
   border-radius: 16px;
   padding: 10px;

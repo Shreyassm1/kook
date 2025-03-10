@@ -7,8 +7,8 @@ import { clearCart } from "../../redux/actions/cartActions";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const canteenId = useSelector((state) => state.cart.canteenId);
   const [isPopupVisible, setPopupVisible] = useState(false);
-
   if (!cartItems || Object.keys(cartItems).length === 0) {
     return (
       <div className="empty-cart-message">
@@ -16,7 +16,6 @@ const Cart = () => {
       </div>
     );
   }
-
   const totalAmount = Object.keys(cartItems).reduce((total, itemId) => {
     return total + cartItems[itemId].ItemPrice * cartItems[itemId].itemCount;
   }, 0);
@@ -24,15 +23,13 @@ const Cart = () => {
   const handlePay = () => {
     setPopupVisible(true);
     const orderInfo = {
+      canteenId,
       cartItems,
       amount: totalAmount,
     };
-    console.log(orderInfo);
     const response = uploadOrder(orderInfo);
-    if (response.success !== false) {
+    if (response.success === false) {
       console.log("Order Failed");
-    } else {
-      console.log(orderInfo);
     }
   };
 

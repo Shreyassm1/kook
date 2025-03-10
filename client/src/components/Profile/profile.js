@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import useFetchData from "../../utils/useFetchData";
 import "../Profile/profile.css";
 import { uploadUserData } from "../../controllers/uploadCon";
-
+const BASE_URLS = process.env.REACT_APP_BASE_URL_S;
+// const BASE_URLC = "https://kook-six.vercel.app";
 const Profile = () => {
   const [orders, setOrders] = useState([]);
   const [hostel, setHostel] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const { data, isLoading, isError } = useFetchData(
-    "https://kook-bqcr.onrender.com/getOrders"
-  );
+  const { data, isLoading, isError } = useFetchData(`${BASE_URLS}/getOrders`);
 
   const handleProfileUpdate = async (event) => {
     event.preventDefault();
@@ -101,7 +100,7 @@ const Profile = () => {
               {order.address || "Not provided"}
             </div>
             <div className="order-item-status">
-              <strong>Delivery Status:</strong> {order.delivery}
+              <strong>Delivery Status:</strong> {order.status}
             </div>
           </div>
         ))}

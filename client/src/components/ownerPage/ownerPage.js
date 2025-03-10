@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./ownerPage.css";
 import { logoutOwner } from "../../controllers/authCon";
-
+const BASE_URLS = process.env.REACT_APP_BASE_URL_S;
+const BASE_URLC = process.env.REACT_APP_BASE_URL_C;
 const OwnerPage = () => {
   const [canteenName, setCanteenName] = useState("");
   const [canteenDescription, setCanteenDescription] = useState("");
@@ -42,18 +43,14 @@ const OwnerPage = () => {
     };
 
     try {
-      const response = await axios.post(
-        "https://kook-bqcr.onrender.com/ownerPost",
-        requestData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${BASE_URLS}/ownerPost`, requestData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       console.log("Canteen data submitted successfully:", response.data);
-      window.location.href = "http://localhost:3000/ownerM";
+      window.location.href = `${BASE_URLC}/ownerM`;
 
       // Reset form fields
       setCanteenName("");
@@ -72,7 +69,7 @@ const OwnerPage = () => {
       if (!response.success) {
         throw new Error("Failed to log out");
       }
-      window.location.href = "http://localhost:3000/login";
+      window.location.href = `${BASE_URLC}/login`;
     } catch (error) {
       console.error("Error logging out:", error);
       alert("Error: Unable to log out. Please try again later.");
@@ -117,11 +114,7 @@ const OwnerPage = () => {
             required
           />
         </div>
-
-        {/* Submit button */}
         <button type="submit">Submit</button>
-
-        {/* Logout button */}
         <button type="button" className="logoutButton" onClick={handleLogout}>
           Logout
         </button>

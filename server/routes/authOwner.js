@@ -8,6 +8,7 @@ const {
   generateRefreshToken,
   generateAccessToken,
 } = require("../utils/generateToken");
+const { loginOwner } = require("../../client/src/controllers/authCon");
 
 //access and refresh token
 const generateAccessAndRefreshTokens = async (ownerId) => {
@@ -89,6 +90,7 @@ router.post("/registerOwner", async (req, res) => {
 //------------------------------------------------------------------------------------------------------------------------------------
 
 router.post("/loginOwner", async (req, res) => {
+  console.log("loginOwner Accessed");
   try {
     const { email, password } = req.body;
 

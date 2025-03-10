@@ -1,189 +1,126 @@
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-.owner-menu-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #f8f8f8;
-  color: #333;
-}
-.owner-menu-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px;
-}
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
-.owner-menu-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.owner-menu-form-container {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-}
-
-.owner-menu-form {
+.owner-home-main {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  font-family: "Nunito", sans-serif;
 }
 
-.owner-menu-form__input {
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.owner-menu-form__input:focus {
-  border-color: #54ab80;
-  outline: none;
-}
-
-.owner-submit-btn {
-  background-color: #54ab80;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.owner-submit-btn:hover {
-  background-color: #54ab80;
-}
-
-.owner-menu-buttons {
+.owner-home-header {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-}
-
-.owner-menu-button {
-  background-color: #54ab80;
+  align-items: center;
+  background-color: #333;
   color: white;
-  padding: 12px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  padding: 15px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-.owner-menu-button:hover {
-  background-color: #44ab78;
+.canteeen-name-owner-home {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.owner-logout-btn i {
   cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.3s;
 }
 
-.owner-menu-items-list {
-  background-color: #fff;
+.owner-logout-btn i:hover {
+  color: rgb(219, 5, 5);
+}
+
+.owner-home-body {
+  display: flex;
+  flex: 1;
+  padding-top: 80px;
+}
+
+.owner-menu-update-container {
+  flex: 1;
+  background-color: #f8f9fa;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
-.owner-menu-items-list h2 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 20px;
+.owner-menu-items-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .owner-menu-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.owner-menu-item:last-child {
-  border-bottom: none;
-}
-
-.owner-menu-item-image {
+.owner-menu-item img {
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .owner-menu-item-info {
-  flex-grow: 1;
+  flex: 1;
 }
 
-.owner-menu-item-info h3 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
+.owner-delete-item i {
+  cursor: pointer;
+  color: rgb(216, 5, 5);
+  transition: color 0.3s;
+  margin-right: 5px;
 }
 
-.owner-menu-item-info p {
-  font-size: 1rem;
-  color: #777;
-  margin-bottom: 8px;
+.owner-delete-item i:hover {
+  color: darkred;
 }
 
-.owner-menu-item-info span {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #54ab80;
+.owner-profile-update-container {
+  flex: 1;
+  background-color: #e9ecef;
+  padding: 20px;
 }
-
-@media (max-width: 768px) {
-  .owner-menu-container {
-    padding: 20px;
-  }
-
-  .owner-menu-form-container {
-    padding: 20px;
-  }
-
-  .owner-menu-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .owner-menu-item-image {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 15px;
-  }
-
-  .owner-menu-item-info h3 {
-    font-size: 1rem;
-  }
-
-  .owner-menu-button {
-    width: 100%;
-    padding: 15px 0;
-    text-align: center;
-  }
-} */
-
-.owner-home-main {
+.owner-active-order-list {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-}
-.owner-home-header {
-  font-family: "Roboto", sans-serif;
-}
-.owner-home-body {
-  display: flex;
   align-items: center;
   justify-content: center;
+}
+.order-item-box {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-radius: 16px;
+  padding: 10px;
+  text-align: start;
+  width: 80%;
+}
+
+.ordered-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 400;
+
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.order-address,
+.order-total,
+.order-status {
+  font-size: 18px;
+  color: #696969;
 }

@@ -8,13 +8,20 @@ import {
 
 const initialState = {
   cartItems: {},
+  canteenId: null,
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const { _id, ItemName, ItemPrice, ItemDescription, ItemImage } =
-        action.payload; // Getting item details from payload
+      const {
+        _id,
+        ItemName,
+        ItemPrice,
+        ItemDescription,
+        ItemImage,
+        canteenId,
+      } = action.payload; // Getting item details from payload
       return {
         ...state,
         cartItems: {
@@ -27,6 +34,7 @@ const cartReducer = (state = initialState, action) => {
             itemCount: 1, // Adding new item with itemCount = 1
           },
         },
+        canteenId,
       };
 
     case REMOVE_FROM_CART:
@@ -45,6 +53,7 @@ const cartReducer = (state = initialState, action) => {
         ItemPrice: incrementPrice,
         ItemDescription: incrementDesc,
         ItemImage: incrementImg,
+
         itemCount: incrementCount,
       } = action.payload;
 
@@ -57,6 +66,7 @@ const cartReducer = (state = initialState, action) => {
             ItemPrice: incrementPrice,
             ItemDescription: incrementDesc,
             ItemImage: incrementImg,
+
             itemCount: incrementCount + 1, // Incrementing itemCount
           },
         },
@@ -69,6 +79,7 @@ const cartReducer = (state = initialState, action) => {
         ItemPrice: decrementPrice,
         ItemDescription: decrementDesc,
         ItemImage: decrementImg,
+
         itemCount: decrementCount,
       } = action.payload;
 
@@ -91,6 +102,7 @@ const cartReducer = (state = initialState, action) => {
             ItemPrice: decrementPrice,
             ItemDescription: decrementDesc,
             ItemImage: decrementImg,
+
             itemCount: decrementCount - 1, // Decrementing itemCount
           },
         },

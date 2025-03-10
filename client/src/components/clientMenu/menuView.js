@@ -9,7 +9,8 @@ import {
   incrementItem,
   decrementItem,
 } from "../../redux/actions/cartActions";
-
+const BASE_URLS = process.env.REACT_APP_BASE_URL_S;
+// const BASE_URLC = "https://kook-six.vercel.app";
 const Menu = () => {
   const [items, setItems] = useState([]);
   const { canteenId } = useParams();
@@ -23,15 +24,13 @@ const Menu = () => {
     data: menuData,
     isLoading: isMenuLoading,
     isError: isMenuError,
-  } = useFetchData(`https://kook-bqcr.onrender.com/getMenu/${canteenId}`);
+  } = useFetchData(`${BASE_URLS}/getMenu/${canteenId}`);
 
   const {
     data: canteenData,
     isLoading: isCanteenLoading,
     isError: isCanteenError,
-  } = useFetchData(
-    `https://kook-bqcr.onrender.com/getCanteenName/${canteenId}`
-  );
+  } = useFetchData(`${BASE_URLS}/getCanteenName/${canteenId}`);
 
   // Effect to update items with itemCount and cart data
   useEffect(() => {
@@ -54,7 +53,9 @@ const Menu = () => {
 
   // Handle adding item to cart
   const handleAdd = (itemId) => {
-    const updatedItem = items.find((item) => item._id === itemId);
+    const newItem = items.find((item) => item._id === itemId);
+    const updatedItem = { ...newItem, canteenId };
+    console.log(updatedItem);
     if (!updatedItem) return; // If item doesn't exist, do nothing
 
     if (updatedItem.itemCount === 0) {
@@ -68,7 +69,8 @@ const Menu = () => {
 
   // Handle subtracting item from cart
   const handleSub = (itemId) => {
-    const updatedItem = items.find((item) => item._id === itemId);
+    const newItem = items.find((item) => item._id === itemId);
+    const updatedItem = { ...newItem, canteenId };
     if (!updatedItem || updatedItem.itemCount === 0) return; // Do nothing if count is 0
 
     if (updatedItem.itemCount === 1) {

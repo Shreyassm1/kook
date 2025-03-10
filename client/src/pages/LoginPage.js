@@ -4,7 +4,8 @@ import { loginUser } from "../controllers/authCon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "./register.css";
-
+const BASE_URLS = process.env.REACT_APP_BASE_URL_S;
+// const BASE_URLC = "https://kook-six.vercel.app";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +15,7 @@ function Register() {
   const googleAuth = async (e) => {
     e.preventDefault();
     // Redirect user to OAuth2 authentication route on backend
-    window.location.href = "https://kook-bqcr.onrender.com/auth/google";
+    window.location.href = `${BASE_URLS}/auth/google`;
   };
 
   const handleSubmit = async (e) => {

@@ -33,6 +33,7 @@ fs.readdirSync("./routes").map((r) => {
     console.log(`failed to load ${r}:`, err);
   }
 });
+
 mongoose
   .connect(
     "mongodb+srv://altshreyas:fstiwrhsb@cluster0.kjs4euw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",

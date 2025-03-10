@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
-
 //order object --> {...orderDetails, itemDetails array [name,quantity]}
 
 const orderSchema = mongoose.Schema({
   userId: {
     type: String,
-    required: false,
+  },
+  canteenId: {
+    type: String,
   },
   items: [
     {
@@ -19,9 +20,8 @@ const orderSchema = mongoose.Schema({
   },
   address: {
     type: String,
-    required: false,
   },
-  delivery: {
+  status: {
     type: String,
     default: "pending",
   },

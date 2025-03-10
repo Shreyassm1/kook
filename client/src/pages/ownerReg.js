@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import { registerOwner } from '../controllers/authCon';
-import './register.css';
-function Register() {
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { registerOwner } from "../controllers/authCon";
+import "./register.css";
 
+function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ function Register() {
     const registrationData = {
       username,
       email,
-      password
+      password,
     };
 
     try {
@@ -30,38 +30,56 @@ function Register() {
   };
 
   return (
-    <div className='authentication'>
-      <div className='authentication-form'>
-        <div className='form-title'>Nice To Meet You</div>
-        <form layout='vertical'>
-          <div className='input-box-title'>
-            Name
+    <div className="authentication">
+      <div className="authentication-form">
+        <div className="form-title">Nice To Meet You</div>
+        <form layout="vertical">
+          <div className="input-box-title">Name</div>
+          <div className="input-box-uep">
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Name"
+            />
           </div>
-          <div className='input-box-uep'>
-            <input type='text' value={username} onChange={(e)=>setUsername(e.target.value)} placeholder='Name'/>
+          <div className="input-box-title">E-mail</div>
+          <div className="input-box-uep">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="xyz@email.com"
+            />
           </div>
-          <div className='input-box-title'>
-            E-mail
+          <div className="input-box-title">Password</div>
+          <div className="input-box-uep">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="password"
+            />
           </div>
-          <div className='input-box-uep'>
-            <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='xyz@email.com'/>
+          <button
+            className="primary-button"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            REGISTER
+          </button>
+          <div className="links">
+            <Link to="/ownerL" className="anchor">
+              Already have an account?
+            </Link>
           </div>
-          <div className='input-box-title'>
-            Password
-          </div>
-          <div className='input-box-uep'>
-            <input type='password' value={password} onChange={(e)=>setPassword(e.target.value)} placeholder='password'/>
-          </div>
-          <button className='primary-button' type='submit' onClick={handleSubmit}>REGISTER</button>
-          <div className='links'>
-            <Link to='/ownerL' className='anchor'>Already have an account?</Link>
-          </div>
-          <div className='links'>
-          <Link to='/' className='anchor'>Click here if you are a student.</Link>
+          <div className="links">
+            <Link to="/" className="anchor">
+              Click here if you are a student.
+            </Link>
           </div>
         </form>
       </div>
-
     </div>
   );
 }
